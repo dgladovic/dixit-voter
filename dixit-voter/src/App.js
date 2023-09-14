@@ -37,7 +37,6 @@ function App() {
     const playerSelection = {
       id: key,
       player: `Djoka`,
-      touched: 'yes'
     };
     const stringSelection = JSON.stringify(playerSelection);
     socket.emit('cardVote', stringSelection);
@@ -48,12 +47,14 @@ function App() {
     const playerSelection = {
       id: key,
       player: `Djoka`,
-      touched: 'yes'
     };
     const stringSelection = JSON.stringify(playerSelection);
     socket.emit('ownerVote', stringSelection);
   };
 
+  const resetCards = () =>{
+    socket.emit('resetCards');
+  }
   // An array of unique keys for the buttons
   const buttonKeys = ['1', '2', '3', '4'];
 
@@ -87,6 +88,11 @@ function App() {
               Vote Card {key}
             </button>
           ))}
+          <button
+            onClick={resetCards} // No need to pass the key here
+          >
+            Reset Cards
+          </button>
         </div>
         <div>
           {messages.map((message, index) => (
