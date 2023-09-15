@@ -1,14 +1,17 @@
   import React, { useEffect, useState, useRef } from 'react';
   import io from 'socket.io-client';
+import UserInfoRoomSelection from './UserInfoRoomSelection';
 
   const socket = io('http://localhost:3000'); // Replace with your server's URL
 
   function App() {
+    const [rooms, setRooms] = useState([]);
     const [messages, setMessages] = useState([]);
     const [messagesRes, setMessagesRes] = useState([]);
     const [messageInput, setMessageInput] = useState('');
     const [buttons, setButtons] = useState([]);
     const [player, setPlayer] = useState({});
+    const [currentRoom, setCurrentRoom] = useState('');
 
     useEffect(() => {
       // Set a new player
@@ -21,6 +24,11 @@
       console.log('once');
       socket.emit('joinSession', JSON.stringify(Player));
     }, []);
+
+    const setPlayerContext = (data) =>{
+      console.log(data,'realDimi');
+      setCurrentRoom(data.roomName);
+    }
 
     useEffect(() => {
       // Listen for cards
@@ -48,6 +56,14 @@
       });
     }, [messagesRes]);
 
+    useEffect(() => {
+      socket.on('roomList', (updatedRooms) => {
+        console.log(updatedRooms,'hejo');
+        // Update the list of rooms whenever it changes
+        setRooms(JSON.parse(updatedRooms));
+      });
+    }, [rooms]);
+
     const handleSendMessage = () => {
       // Send a message to the server
       socket.emit('message', messageInput);
@@ -59,6 +75,7 @@
       const playerSelection = {
         id: key,
         player: player.name,
+        room: currentRoom
       };
       const stringSelection = JSON.stringify(playerSelection);
       socket.emit('cardVote', stringSelection);
@@ -69,23 +86,27 @@
       const playerSelection = {
         id: key,
         player: player.name,
+        room: currentRoom
       };
       const stringSelection = JSON.stringify(playerSelection);
       socket.emit('ownerVote', stringSelection);
     };
 
     const handleScore = () => {
-      const storyTeller = JSON.stringify(player);
+      const objValue = {...player, room: currentRoom}
+      const storyTeller = JSON.stringify(objValue);
+      console.log(storyTeller);
       socket.emit('votingResults',storyTeller);
     }
 
     const resetCards = () => {
-      socket.emit('resetCards');
+      socket.emit('resetCards',currentRoom);
     }
 
     return (
       <div>
         <h1>Socket.IO Chat</h1>
+        <UserInfoRoomSelection socket={socket} rooms={rooms} player={player} handlePlayer={setPlayerContext}/>
         <h2>{player.name}</h2>
         <div>
           <div>
