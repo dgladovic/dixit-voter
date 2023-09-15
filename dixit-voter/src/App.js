@@ -13,21 +13,18 @@ import UserInfoRoomSelection from './UserInfoRoomSelection';
     const [player, setPlayer] = useState({});
     const [currentRoom, setCurrentRoom] = useState('');
 
-    useEffect(() => {
-      // Set a new player
+    const setPlayerContext = (data) =>{
+      setCurrentRoom(data.roomName);
+      console.log(data,'hunja');
       const Player = {
         id: '',
-        name: `Djoka${Math.floor(Math.random()*10)}`,
+        name: data.playerName,
         score: 0,
       }
       setPlayer(Player);
       console.log('once');
-      socket.emit('joinSession', JSON.stringify(Player));
-    }, []);
-
-    const setPlayerContext = (data) =>{
-      console.log(data,'realDimi');
-      setCurrentRoom(data.roomName);
+            // socket.emit('joinRoom', message);
+      socket.emit('joinRoom', JSON.stringify(data));
     }
 
     useEffect(() => {
@@ -106,7 +103,7 @@ import UserInfoRoomSelection from './UserInfoRoomSelection';
     return (
       <div>
         <h1>Socket.IO Chat</h1>
-        <UserInfoRoomSelection socket={socket} rooms={rooms} player={player} handlePlayer={setPlayerContext}/>
+        <UserInfoRoomSelection socket={socket} rooms={rooms} handlePlayer={setPlayerContext}/>
         <h2>{player.name}</h2>
         <div>
           <div>

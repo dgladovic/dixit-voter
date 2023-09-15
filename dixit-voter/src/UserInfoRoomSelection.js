@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import Select from 'react-select';
 
-const UserInfoRoomSelection = ({ socket, rooms, player, handlePlayer }) => {
+const UserInfoRoomSelection = ({ socket, rooms, handlePlayer }) => {
   const [name, setName] = useState('');
   const [selectedPicture, setSelectedPicture] = useState('');
   const [selectedRoom, setSelectedRoom] = useState(null);
@@ -76,12 +76,12 @@ const UserInfoRoomSelection = ({ socket, rooms, player, handlePlayer }) => {
           // Join the selected room when the user clicks "Join Room"
           if (selectedRoom) {
             const messageContent = {
-                playerName: player.name,
+                playerName: name,
                 roomName: selectedRoom.value
             }
             const message = JSON.stringify(messageContent);
             handlePlayer(messageContent);
-            socket.emit('joinRoom', message);
+            // socket.emit('joinRoom', message);
           }
         }}
       >
