@@ -5,6 +5,7 @@
 
   function App() {
     const [messages, setMessages] = useState([]);
+    const [messagesRes, setMessagesRes] = useState([]);
     const [messageInput, setMessageInput] = useState('');
     const [buttons, setButtons] = useState([]);
     const [player, setPlayer] = useState({});
@@ -38,6 +39,15 @@
       });
     }, [messages]);
 
+    useEffect(() => {
+      // Listen for incoming messages from the server
+      socket.on('messageRes', (message) => {
+        JSON.parse(message);
+        console.log('scores',message);
+        setMessagesRes([message]);
+      });
+    }, [messagesRes]);
+
     const handleSendMessage = () => {
       // Send a message to the server
       socket.emit('message', messageInput);
@@ -64,6 +74,11 @@
       socket.emit('ownerVote', stringSelection);
     };
 
+    const handleScore = () => {
+      const storyTeller = JSON.stringify(player);
+      socket.emit('votingResults',storyTeller);
+    }
+
     const resetCards = () => {
       socket.emit('resetCards');
     }
@@ -71,14 +86,14 @@
     return (
       <div>
         <h1>Socket.IO Chat</h1>
+        <h2>{player.name}</h2>
         <div>
           <div>
-            {/* <div>
-              {buttons.map((button, index) => {
-                return <div style={{ border: 'solid red 1px' }} key={index}>{button}</div>
-              })
-              }
-            </div> */}
+          <div>
+            {messagesRes.map((message, index) => (
+              <div style={{border:'solid red 1px'}} key={index}>{message}</div>
+            ))}
+          </div>
             <input
               type="text"
               value={messageInput}
@@ -108,6 +123,11 @@
               onClick={resetCards} // No need to pass the key here
             >
               Reset Cards
+            </button>
+            <button
+              onClick={handleScore} // No need to pass the key here
+            >
+              Get Score Update
             </button>
           </div>
           <div>
