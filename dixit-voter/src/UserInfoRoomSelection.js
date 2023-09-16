@@ -6,6 +6,7 @@ import Select from 'react-select';
 const UserInfoRoomSelection = ({ socket, rooms, handlePlayer }) => {
   const [name, setName] = useState('');
   const [selectedPicture, setSelectedPicture] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [newRoomName, setNewRoomName] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,6 +15,21 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer }) => {
     { label: 'Avatar 1', value: 'avatar1.jpg' },
     { label: 'Avatar 2', value: 'avatar2.jpg' },
     // Add more predefined avatars here
+  ];
+
+  const playerColors = [
+    { label: 'Light Purple', value: 'rgb(155,84,131)' },
+    { label: 'Light Orange', value: 'rgb(238,99,68)' },
+    { label: 'Brown', value: 'rgb(81,62,42)' },
+    { label: 'White', value: 'rgb(232,235,232)' },
+    { label: 'Blue', value: 'rgb(78,109,163)' },
+    { label: 'Gray', value: 'rgb(156,157,147)' },
+    { label: 'Light Orange', value: 'rgb(238,99,68)' },
+    { label: 'Lime', value: 'rgb(178,203,71)' },
+    { label: 'Purple', value: 'rgb(119,57,112)' },
+    { label: 'Yellow', value: 'rgb(238,198,32)' },
+    { label: 'Dark Gray', value: 'rgb(168,68,65)' },
+    { label: 'Green', value: 'rgb(87,144,74)' },
   ];
 
 //   useEffect(() => {
@@ -41,6 +57,14 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer }) => {
       />
 
       <h2>Select a Picture</h2>
+      <Select
+        options={userPictures}
+        onChange={(selectedOption) => setSelectedPicture(selectedOption.value)}
+        value={selectedPicture}
+        isSearchable={false}
+      />
+
+      <h2>Select a Color</h2>
       <Select
         options={userPictures}
         onChange={(selectedOption) => setSelectedPicture(selectedOption.value)}
