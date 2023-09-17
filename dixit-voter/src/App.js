@@ -60,6 +60,7 @@ function App() {
         let voter = allVoters[i];
         if(!voter.voted){
           allVoted = false;
+          setCheckOwner(false);
           break;
         }
       }
@@ -115,9 +116,6 @@ function App() {
     const storyTeller = JSON.stringify(objValue);
     console.log(storyTeller);
     socket.emit('votingResults', storyTeller);
-  }
-
-  const resetCards = () => {
     socket.emit('resetCards', currentRoom);
   }
 
@@ -157,11 +155,6 @@ function App() {
                   Vote Card {index}
                 </button>
               ))}
-              <button
-                onClick={resetCards} // No need to pass the key here
-              >
-                Reset Cards
-              </button>
               <button
                 onClick={handleScore} // No need to pass the key here
               >
