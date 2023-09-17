@@ -8,11 +8,14 @@ function App() {
   const [rooms, setRooms] = useState([]);
   const [messages, setMessages] = useState([]);
   const [messagesRes, setMessagesRes] = useState([]);
-  const [messageInput, setMessageInput] = useState('');
   const [buttons, setButtons] = useState([]);
   const [player, setPlayer] = useState({});
   const [currentRoom, setCurrentRoom] = useState('');
   const [firstLog, setFirstLog] = useState(true);
+  const [voteStatus, setVoteStatus] = useState([]);
+
+  const [allVoted, setAllVoted] = useState(false);
+  // proverava da li su svi glasali, ukoliko jesu, onda se moze raditi glasanje za kartu
 
   const setPlayerContext = (data) => {
     setCurrentRoom(data.roomName);
@@ -20,8 +23,10 @@ function App() {
       id: '',
       name: data.playerName,
       score: 0,
+      color: data.color
     }
     setPlayer(Player);
+    console.log(Player,'test');
     setFirstLog(false);
     socket.emit('joinRoom', JSON.stringify(data));
   }
@@ -42,6 +47,25 @@ function App() {
       setMessages([...messages, message]);
     });
   }, [messages]);
+
+  useEffect(() => {
+    // Listen for players voting status
+    socket.on('playerVoteStatus', (message) => {
+      JSON.parse(message);
+
+      let allVoters = JSON.parse(message);
+      let allVoted = true;
+
+      for(let i = 0; i < allVoters.length; i++){
+        let voter = allVoters[i];
+        if(!voter.voted){
+          allVoted = false;
+          break;
+        }
+      }
+    });
+
+  }, [voteStatus]);
 
   useEffect(() => {
     // Listen for scoring update
@@ -100,7 +124,10 @@ function App() {
         <UserInfoRoomSelection socket={socket} rooms={rooms} handlePlayer={setPlayerContext} />
         :
         <div>
-          <h2>{player.name}</h2>
+          <h2>
+            <div style={{ display: 'inline-block',width:'40px',height:'40px',backgroundColor:player.color }}/>
+            {player.name}
+          </h2>
           <div>
             <div>
               <div>
