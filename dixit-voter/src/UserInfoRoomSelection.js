@@ -66,9 +66,9 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer }) => {
 
       <h2>Select a Color</h2>
       <Select
-        options={userPictures}
-        onChange={(selectedOption) => setSelectedPicture(selectedOption.value)}
-        value={selectedPicture}
+        options={playerColors}
+        onChange={(selectedOption) => setSelectedColor(selectedOption.value)}
+        value={selectedColor}
         isSearchable={false}
       />
 
@@ -101,7 +101,8 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer }) => {
           if (selectedRoom) {
             const messageContent = {
                 playerName: name,
-                roomName: selectedRoom.value
+                roomName: selectedRoom.value,
+                color: selectedColor
             }
             const message = JSON.stringify(messageContent);
             handlePlayer(messageContent);
