@@ -14,7 +14,7 @@ function App() {
   const [firstLog, setFirstLog] = useState(true);
   const [voteStatus, setVoteStatus] = useState([]);
 
-  const [allVoted, setAllVoted] = useState(false);
+  const [checkOwner, setCheckOwner] = useState(false);
   // proverava da li su svi glasali, ukoliko jesu, onda se moze raditi glasanje za kartu
 
   const setPlayerContext = (data) => {
@@ -63,6 +63,10 @@ function App() {
           break;
         }
       }
+
+      if(allVoted){
+        setCheckOwner(true);
+      }      
     });
 
   }, [voteStatus]);
@@ -135,7 +139,7 @@ function App() {
                   <div style={{ border: 'solid red 1px' }} key={index}>{message}</div>
                 ))}
               </div>
-              {buttons.map((key, index) => (
+              {!checkOwner && buttons.map((key, index) => (
                 <button
                   key={index}
                   data-key={index} // Set the data-key attribute
@@ -144,7 +148,7 @@ function App() {
                   Select Card {index}
                 </button>
               ))}
-              {buttons.map((key, index) => (
+              {checkOwner && buttons.map((key, index) => (
                 <button
                   key={index}
                   data-key={index} // Set the data-key attribute
