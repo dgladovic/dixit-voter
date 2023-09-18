@@ -10,9 +10,11 @@ function App() {
   const [messagesRes, setMessagesRes] = useState([]);
   const [buttons, setButtons] = useState([]);
   const [player, setPlayer] = useState({});
+  const [storyTeller, setStoryteller] = useState([]);
   const [currentRoom, setCurrentRoom] = useState('');
   const [firstLog, setFirstLog] = useState(true);
   const [voteStatus, setVoteStatus] = useState([]);
+  
 
   const [checkOwner, setCheckOwner] = useState(false);
   // proverava da li su svi glasali, ukoliko jesu, onda se moze raditi glasanje za kartu
@@ -47,6 +49,15 @@ function App() {
       setMessages([...messages, message]);
     });
   }, [messages]);
+
+  useEffect(() => {
+    // Listen for storyteller update
+    socket.on('storyteller', (message) => {
+      let newStoryteller = JSON.parse(message);
+      console.log('storytellere',newStoryteller);
+      setStoryteller([newStoryteller]);
+    });
+  }, [storyTeller]);
 
   useEffect(() => {
     // Listen for players voting status
@@ -119,6 +130,22 @@ function App() {
     socket.emit('resetCards', currentRoom);
   }
 
+  const startGame = () => {
+    const messageCont = {
+      room: currentRoom
+    };
+    const message = JSON.stringify(messageCont);
+    socket.emit('startGame',message);
+  }
+
+  const nextS = () => {
+    const messageCont = {
+      room: currentRoom
+    };
+    const message = JSON.stringify(messageCont);
+    socket.emit('getstoryteller',message);
+  }
+
   return (
     <div>
       <h1>Socket.IO Chat</h1>
@@ -159,6 +186,16 @@ function App() {
                 onClick={handleScore} // No need to pass the key here
               >
                 Get Score Update
+              </button>
+              <button
+                onClick={startGame} // No need to pass the key here
+              >
+                Start Game
+              </button>
+              <button
+                onClick={nextS} // No need to pass the key here
+              >
+                Next ST
               </button>
             </div>
             <div>
