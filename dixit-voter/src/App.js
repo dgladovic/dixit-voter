@@ -14,10 +14,13 @@ function App() {
   const [currentRoom, setCurrentRoom] = useState('');
   const [firstLog, setFirstLog] = useState(true);
   const [voteStatus, setVoteStatus] = useState([]);
+  const [ownershipStatus, setOwnershipStatus] = useState([]);
+
   
 
   const [checkOwner, setCheckOwner] = useState(false);
   const [checkStoryTeller, setCheckStoryTeller] = useState(false);
+  const [enableScore, setEnableScore] = useState(false);
 
   // proverava da li su svi glasali, ukoliko jesu, onda se moze raditi glasanje za kartu
 
@@ -90,6 +93,28 @@ function App() {
     });
 
   }, [voteStatus]);
+
+  useEffect(() => {
+    // Listen for players voting status
+    socket.on('playerOwnershipStatus', (message) => {
+
+      let allVoters = JSON.parse(message);
+      let allVoted = true;
+      for(let i = 0; i < allVoters.length; i++){
+        let voter = allVoters[i];
+        if(!voter.votedOwnership){
+          allVoted = false;
+          setEnableScore(false);
+          break;
+        }
+      }
+
+      if(allVoted){
+        setEnableScore(true);
+      }      
+    });
+
+  }, [ownershipStatus]);
 
   useEffect(() => {
     // Listen for scoring update
@@ -187,7 +212,7 @@ function App() {
                   Vote Card {index}
                 </button>
               ))}
-              {checkStoryTeller && <button
+              {enableScore && checkStoryTeller && <button
                 onClick={handleScore} // No need to pass the key here
               >
                 Get Score Update
