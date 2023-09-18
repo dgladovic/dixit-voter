@@ -17,6 +17,8 @@ function App() {
   
 
   const [checkOwner, setCheckOwner] = useState(false);
+  const [checkStoryTeller, setCheckStoryTeller] = useState(false);
+
   // proverava da li su svi glasali, ukoliko jesu, onda se moze raditi glasanje za kartu
 
   const setPlayerContext = (data) => {
@@ -56,17 +58,23 @@ function App() {
       let newStoryteller = JSON.parse(message);
       console.log('storytellere',newStoryteller);
       setStoryteller([newStoryteller]);
+      if(newStoryteller.name === player.name){
+        setCheckStoryTeller(true);
+      }
+      else{
+        setCheckStoryTeller(false);
+      }
+
     });
   }, [storyTeller]);
 
   useEffect(() => {
     // Listen for players voting status
     socket.on('playerVoteStatus', (message) => {
-      JSON.parse(message);
 
       let allVoters = JSON.parse(message);
       let allVoted = true;
-
+      console.log(allVoters,'testmeup ');
       for(let i = 0; i < allVoters.length; i++){
         let voter = allVoters[i];
         if(!voter.voted){
@@ -128,6 +136,11 @@ function App() {
     console.log(storyTeller);
     socket.emit('votingResults', storyTeller);
     socket.emit('resetCards', currentRoom);
+    const messageCont = {
+      room: currentRoom
+    };
+    const message = JSON.stringify(messageCont);
+    socket.emit('getstoryteller',message);
   }
 
   const startGame = () => {
@@ -136,14 +149,6 @@ function App() {
     };
     const message = JSON.stringify(messageCont);
     socket.emit('startGame',message);
-  }
-
-  const nextS = () => {
-    const messageCont = {
-      room: currentRoom
-    };
-    const message = JSON.stringify(messageCont);
-    socket.emit('getstoryteller',message);
   }
 
   return (
@@ -164,7 +169,7 @@ function App() {
                   <div style={{ border: 'solid red 1px' }} key={index}>{message}</div>
                 ))}
               </div>
-              {!checkOwner && buttons.map((key, index) => (
+              {!checkStoryTeller && !checkOwner && buttons.map((key, index) => (
                 <button
                   key={index}
                   data-key={index} // Set the data-key attribute
@@ -182,20 +187,15 @@ function App() {
                   Vote Card {index}
                 </button>
               ))}
-              <button
+              {checkStoryTeller && <button
                 onClick={handleScore} // No need to pass the key here
               >
                 Get Score Update
-              </button>
+              </button>}
               <button
                 onClick={startGame} // No need to pass the key here
               >
                 Start Game
-              </button>
-              <button
-                onClick={nextS} // No need to pass the key here
-              >
-                Next ST
               </button>
             </div>
             <div>
