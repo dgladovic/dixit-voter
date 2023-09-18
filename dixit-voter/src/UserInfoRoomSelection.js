@@ -1,7 +1,22 @@
-// UserInfoRoomSelection.js
-import React, { useState, useEffect } from 'react';
-import Modal from 'react-modal';
-import Select from 'react-select';
+import React, { useState } from 'react';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Button,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Avatar,
+  List,
+  ListItem,
+  ListItemText,
+  MenuItem,
+  Select
+} from '@mui/material';
+import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 
 const UserInfoRoomSelection = ({ socket, rooms, handlePlayer }) => {
   const [name, setName] = useState('');
@@ -9,7 +24,9 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer }) => {
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [newRoomName, setNewRoomName] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isAvatarDialogOpen, setIsAvatarDialogOpen] = useState(false);
+  const [isAddRoomOpen, setIsAddRoomOpen] = useState(false);
 
   const userPictures = [
     { label: 'Avatar 1', value: 'avatar1.jpg' },
@@ -32,86 +49,179 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer }) => {
     { label: 'Green', value: 'rgb(87,144,74)' },
   ];
 
-//   useEffect(() => {
-//   }, [rooms]);
+  const exampleAvatars = [
+    'avatar1.jpg',
+    'avatar2.jpg',
+    // Add more example avatars here
+  ];
 
   const handleAddRoom = () => {
-    // Send a request to the server to create a new room
+    setIsAddRoomOpen(true);
+  };
+
+  const handleAvatarClick = (avatar) => {
+    setSelectedPicture(avatar);
+    setSelectedColor(''); // Reset color selection
+    setIsAvatarDialogOpen(false);
+  };
+
+  const handleConfirmClick = () => {
+    if (name && selectedColor) {
+      // const messageContent = {
+      //   playerName: name,
+      //   roomName: selectedRoom.value,
+      //   color: selectedColor,
+      // };
+      // const message = JSON.stringify(messageContent);
+      // handlePlayer(messageContent);
+      // socket.emit('joinRoom', message);
+      setIsDialogOpen(true);
+    }
+    // setIsDialogOpen(false);
+  };
+
+  const handleAddNewRoom = () => {
     socket.emit('createRoom', newRoomName);
+    if (newRoomName) {
+      const messageContent = {
+        playerName: name,
+        roomName: newRoomName,
+        color: selectedColor,
+      };
+      const message = JSON.stringify(messageContent);
+      handlePlayer(messageContent);
+      setIsAddRoomOpen(false);
+      socket.emit('joinRoom', message);
+    }
+  };
 
-    // Close the modal
-    setIsModalOpen(false);
-
-    // Clear the new room name input
-    setNewRoomName('');
+  const joinRoom = (room) => {
+    console.log(room, 'sobica');
+    if (room) {
+      const messageContent = {
+        playerName: name,
+        roomName: room,
+        color: selectedColor,
+      };
+      const message = JSON.stringify(messageContent);
+      handlePlayer(messageContent);
+      setIsAddRoomOpen(false);
+      socket.emit('joinRoom', message);
+    }
   };
 
   return (
-    <div>
-      <h2>User Information</h2>
-      <input
-        type="text"
-        placeholder="Your Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-
-      <h2>Select a Picture</h2>
-      <Select
-        options={userPictures}
-        onChange={(selectedOption) => setSelectedPicture(selectedOption.value)}
-        value={selectedPicture}
-        isSearchable={false}
-      />
-
-      <h2>Select a Color</h2>
-      <Select
-        options={playerColors}
-        onChange={(selectedOption) => setSelectedColor(selectedOption.value)}
-        value={selectedColor}
-        isSearchable={false}
-      />
-
-      <h2>Select a Room</h2>
-      <Select
-        options={rooms.map((room) => ({ label: room.name, value: room.name }))}
-        onChange={(selectedOption) => setSelectedRoom(selectedOption)}
-        value={selectedRoom}
-      />
-
-      <button onClick={() => setIsModalOpen(true)}>Add Room</button>
-
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={() => setIsModalOpen(false)}
-      >
-        <h2>Create a New Room</h2>
-        <input
-          type="text"
-          placeholder="Room Name"
-          value={newRoomName}
-          onChange={(e) => setNewRoomName(e.target.value)}
-        />
-        <button onClick={handleAddRoom}>Add</button>
-      </Modal>
-
-      <button
-        onClick={() => {
-          // Join the selected room when the user clicks "Join Room"
-          if (selectedRoom) {
-            const messageContent = {
-                playerName: name,
-                roomName: selectedRoom.value,
-                color: selectedColor
-            }
-            const message = JSON.stringify(messageContent);
-            handlePlayer(messageContent);
-            // socket.emit('joinRoom', message);
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Card style={{ backgroundColor: selectedColor, width: '90%', maxWidth: '400px' }}>
+        <CardHeader
+          title={
+            <TextField
+              label="Your Name"
+              variant="outlined"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              fullWidth
+            />
           }
-        }}
-      >
-        Join Room
-      </button>
+          avatar={
+            <div
+              style={{ cursor: 'pointer' }}
+              onClick={() => setIsAvatarDialogOpen(true)}
+            >
+              <Avatar src={selectedPicture} alt="Avatar" />
+            </div>
+          }
+        />
+        <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Select
+            placeholder="Pick a color"
+            value={selectedColor}
+            onChange={(e) => setSelectedColor(e.target.value)}
+            style={{ width: '100%' }}
+          >
+            {playerColors.map((colorOption) => (
+              <MenuItem key={colorOption.value} value={colorOption.value}>
+                {colorOption.label}
+              </MenuItem>
+            ))}
+          </Select>
+
+          <Button
+            style={{ width: '60%', marginTop: '16px' }}
+            variant="contained"
+            color="primary"
+            onClick={handleConfirmClick}
+          >
+            Confirm
+          </Button>
+
+          <Dialog
+            open={isDialogOpen}
+            onClose={() => setIsDialogOpen(false)}
+          >
+            <DialogTitle>Selec a room to join</DialogTitle>
+            <DialogContent>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <TextField
+                  style={{ width: '70%' }}
+                  label="Room Name"
+                  variant="outlined"
+                  value={newRoomName}
+                  onChange={(e) => setNewRoomName(e.target.value)}
+                />
+                <div
+                  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                  onClick={handleAddNewRoom}
+                >
+                  <AddCircleOutline
+
+                    variant="contained"
+                    color="primary"
+                  >
+                  </AddCircleOutline>
+                  Add
+
+                </div>
+              </div>
+
+              <List>
+                {rooms.map((room) => (
+                  <ListItem
+                    key={room.name}
+                    button
+                    onClick={() => {
+                      joinRoom(room.name);
+                      setIsDialogOpen(false);
+                    }}
+                  >
+                    <ListItemText primary={room.name} />
+                  </ListItem>
+                ))}
+              </List>
+            </DialogContent>
+          </Dialog>
+
+          <Dialog
+            open={isAvatarDialogOpen}
+            onClose={() => setIsAvatarDialogOpen(false)}
+          >
+            <DialogTitle>Select an Avatar</DialogTitle>
+            <DialogContent>
+              <List>
+                {exampleAvatars.map((avatar) => (
+                  <ListItem
+                    key={avatar}
+                    button
+                    onClick={() => handleAvatarClick(avatar)}
+                  >
+                    <Avatar src={avatar} alt="Avatar" />
+                  </ListItem>
+                ))}
+              </List>
+            </DialogContent>
+          </Dialog>
+        </CardContent>
+      </Card>
     </div>
   );
 };

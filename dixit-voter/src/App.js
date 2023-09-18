@@ -178,7 +178,7 @@ function App() {
 
   return (
     <div>
-      <h1>Socket.IO Chat</h1>
+      <h1>Welcome to Dixit</h1>
       {firstLog === true ?
         <UserInfoRoomSelection socket={socket} rooms={rooms} handlePlayer={setPlayerContext} />
         :
