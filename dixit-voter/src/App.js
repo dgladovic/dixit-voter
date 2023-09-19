@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 import UserInfoRoomSelection from './UserInfoRoomSelection';
+import VoteStatusMonitor from './VoteStatusMonitor';
+import OwnerStatusMontior from './OwnerStatusMonitor';
+import Scoreboard from './Scoreboard';
+import StorytellerMessage from './StorytellerMessage';
 
 const socket = io('http://localhost:3000'); // Replace with your server's URL
 
@@ -10,7 +14,7 @@ function App() {
   const [messagesRes, setMessagesRes] = useState([]);
   const [buttons, setButtons] = useState([]);
   const [player, setPlayer] = useState({});
-  const [storyTeller, setStoryteller] = useState([]);
+  const [storyTeller, setStoryteller] = useState({});
   const [currentRoom, setCurrentRoom] = useState('');
   const [firstLog, setFirstLog] = useState(true);
   const [voteStatus, setVoteStatus] = useState([]);
@@ -60,7 +64,7 @@ function App() {
     socket.on('storyteller', (message) => {
       let newStoryteller = JSON.parse(message);
       console.log('storytellere',newStoryteller);
-      setStoryteller([newStoryteller]);
+      setStoryteller(newStoryteller);
       if(newStoryteller.name === player.name){
         setCheckStoryTeller(true);
       }
@@ -78,6 +82,7 @@ function App() {
       let allVoters = JSON.parse(message);
       let allVoted = true;
       console.log(allVoters,'testmeup ');
+      setVoteStatus(allVoters);
       for(let i = 0; i < allVoters.length; i++){
         let voter = allVoters[i];
         if(!voter.voted){
@@ -100,6 +105,7 @@ function App() {
 
       let allVoters = JSON.parse(message);
       let allVoted = true;
+      setOwnershipStatus(allVoters);
       for(let i = 0; i < allVoters.length; i++){
         let voter = allVoters[i];
         if(!voter.votedOwnership){
@@ -119,9 +125,9 @@ function App() {
   useEffect(() => {
     // Listen for scoring update
     socket.on('messageRes', (message) => {
-      JSON.parse(message);
+      let result = JSON.parse(message);
       console.log('scores', message);
-      setMessagesRes([message]);
+      setMessagesRes(result);
     });
   }, [messagesRes]);
 
@@ -178,7 +184,7 @@ function App() {
 
   return (
     <div>
-      <h1>Welcome to Dixit</h1>
+      {/* <h1>Welcome to Dixit</h1> */}
       {firstLog === true ?
         <UserInfoRoomSelection socket={socket} rooms={rooms} handlePlayer={setPlayerContext} />
         :
@@ -189,11 +195,15 @@ function App() {
           </h2>
           <div>
             <div>
-              <div>
+              {/* <div>
                 {messagesRes.map((message, index) => (
                   <div style={{ border: 'solid red 1px' }} key={index}>{message}</div>
                 ))}
-              </div>
+              </div> */}
+              <StorytellerMessage key={storyTeller.name} storyteller={storyTeller} player={player}/>
+              <Scoreboard messagesRes={messagesRes} singlePlayer={player}/>
+              {!checkOwner && <VoteStatusMonitor voteStatus={voteStatus}/>}
+              {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus}/>}
               {!checkStoryTeller && !checkOwner && buttons.map((key, index) => (
                 <button
                   key={index}
