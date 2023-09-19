@@ -204,8 +204,7 @@ function App() {
               </div> */}
               <StorytellerMessage key={storyTeller.name} storyteller={storyTeller} player={player} />
               <Scoreboard messagesRes={messagesRes} singlePlayer={player} />
-              {!checkOwner && <VoteStatusMonitor voteStatus={voteStatus} />}
-              {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus} />}
+
 
               <Grid container spacing={2} padding={1}>
                 {!checkStoryTeller && !checkOwner && buttons.map((key, index) => (
@@ -242,11 +241,13 @@ function App() {
                 Start Game
               </button>
             </div>
-            <div>
+            {!checkOwner && <VoteStatusMonitor voteStatus={voteStatus} />}
+              {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus} />}
+            {/* <div>
               {messages.map((message, index) => (
                 <div key={index}>{message}</div>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
       }
