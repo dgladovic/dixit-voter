@@ -153,7 +153,7 @@ function App() {
   };
 
   const handleCardVote = (event) => {
-    const key = event.target.getAttribute('data-key'); // Get the key from data-key attribute
+    const key = event; // Get the key from data-key attribute
     const playerSelection = {
       id: key,
       player: player.name,
@@ -206,6 +206,7 @@ function App() {
               <Scoreboard messagesRes={messagesRes} singlePlayer={player} />
               {!checkOwner && <VoteStatusMonitor voteStatus={voteStatus} />}
               {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus} />}
+
               <Grid container spacing={2} padding={1}>
                 {!checkStoryTeller && !checkOwner && buttons.map((key, index) => (
                   <Grid item xs={4} key={index}>
@@ -217,15 +218,19 @@ function App() {
                   </Grid>
                 ))}
               </Grid>
-              {checkOwner && buttons.map((key, index) => (
-                <button
-                  key={index}
-                  data-key={index} // Set the data-key attribute
-                  onClick={handleCardVote} // No need to pass the key here
-                >
-                  Vote Card {index}
-                </button>
-              ))}
+
+              <Grid container spacing={2} padding={1}>
+                {checkOwner && buttons.map((key, index) => (
+                  <Grid item xs={4} key={index}>
+                    <DixitCard
+                      key={index}
+                      id={index} // Set the data-key attribute
+                      checkClick={() => handleCardVote(index)} // No need to pass the key here
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+
               {enableScore && checkStoryTeller && <button
                 onClick={handleScore} // No need to pass the key here
               >
