@@ -5,6 +5,8 @@ import VoteStatusMonitor from './VoteStatusMonitor';
 import OwnerStatusMontior from './OwnerStatusMonitor';
 import Scoreboard from './Scoreboard';
 import StorytellerMessage from './StorytellerMessage';
+import DixitCard from './DixitCard';
+import { Grid } from '@mui/material';
 
 const socket = io('http://localhost:3000'); // Replace with your server's URL
 
@@ -20,7 +22,7 @@ function App() {
   const [voteStatus, setVoteStatus] = useState([]);
   const [ownershipStatus, setOwnershipStatus] = useState([]);
 
-  
+
 
   const [checkOwner, setCheckOwner] = useState(false);
   const [checkStoryTeller, setCheckStoryTeller] = useState(false);
@@ -37,7 +39,7 @@ function App() {
       color: data.color
     }
     setPlayer(Player);
-    console.log(Player,'test');
+    console.log(Player, 'test');
     setFirstLog(false);
     socket.emit('joinRoom', JSON.stringify(data));
   }
@@ -54,7 +56,7 @@ function App() {
     // Listen for cards state update
     socket.on('message', (message) => {
       JSON.parse(message);
-      console.log('message',JSON.parse(message))
+      console.log('message', JSON.parse(message))
       setMessages([...messages, message]);
     });
   }, [messages]);
@@ -63,12 +65,12 @@ function App() {
     // Listen for storyteller update
     socket.on('storyteller', (message) => {
       let newStoryteller = JSON.parse(message);
-      console.log('storytellere',newStoryteller);
+      console.log('storytellere', newStoryteller);
       setStoryteller(newStoryteller);
-      if(newStoryteller.name === player.name){
+      if (newStoryteller.name === player.name) {
         setCheckStoryTeller(true);
       }
-      else{
+      else {
         setCheckStoryTeller(false);
       }
 
@@ -81,20 +83,20 @@ function App() {
 
       let allVoters = JSON.parse(message);
       let allVoted = true;
-      console.log(allVoters,'testmeup ');
+      console.log(allVoters, 'testmeup ');
       setVoteStatus(allVoters);
-      for(let i = 0; i < allVoters.length; i++){
+      for (let i = 0; i < allVoters.length; i++) {
         let voter = allVoters[i];
-        if(!voter.voted){
+        if (!voter.voted) {
           allVoted = false;
           setCheckOwner(false);
           break;
         }
       }
 
-      if(allVoted){
+      if (allVoted) {
         setCheckOwner(true);
-      }      
+      }
     });
 
   }, [voteStatus]);
@@ -106,18 +108,18 @@ function App() {
       let allVoters = JSON.parse(message);
       let allVoted = true;
       setOwnershipStatus(allVoters);
-      for(let i = 0; i < allVoters.length; i++){
+      for (let i = 0; i < allVoters.length; i++) {
         let voter = allVoters[i];
-        if(!voter.votedOwnership){
+        if (!voter.votedOwnership) {
           allVoted = false;
           setEnableScore(false);
           break;
         }
       }
 
-      if(allVoted){
+      if (allVoted) {
         setEnableScore(true);
-      }      
+      }
     });
 
   }, [ownershipStatus]);
@@ -140,7 +142,7 @@ function App() {
   }, [rooms]);
 
   const handleCardSelect = (event) => {
-    const key = event.target.getAttribute('data-key'); // Get the key from data-key attribute
+    const key = event; // Get the key from data-key attribute
     const playerSelection = {
       id: key,
       player: player.name,
@@ -171,7 +173,7 @@ function App() {
       room: currentRoom
     };
     const message = JSON.stringify(messageCont);
-    socket.emit('getstoryteller',message);
+    socket.emit('getstoryteller', message);
   }
 
   const startGame = () => {
@@ -179,7 +181,7 @@ function App() {
       room: currentRoom
     };
     const message = JSON.stringify(messageCont);
-    socket.emit('startGame',message);
+    socket.emit('startGame', message);
   }
 
   return (
@@ -190,7 +192,7 @@ function App() {
         :
         <div>
           <h2>
-            <div style={{ display: 'inline-block',width:'40px',height:'40px',backgroundColor:player.color }}/>
+            <div style={{ display: 'inline-block', width: '40px', height: '40px', backgroundColor: player.color }} />
             {player.name}
           </h2>
           <div>
@@ -200,19 +202,21 @@ function App() {
                   <div style={{ border: 'solid red 1px' }} key={index}>{message}</div>
                 ))}
               </div> */}
-              <StorytellerMessage key={storyTeller.name} storyteller={storyTeller} player={player}/>
-              <Scoreboard messagesRes={messagesRes} singlePlayer={player}/>
-              {!checkOwner && <VoteStatusMonitor voteStatus={voteStatus}/>}
-              {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus}/>}
-              {!checkStoryTeller && !checkOwner && buttons.map((key, index) => (
-                <button
-                  key={index}
-                  data-key={index} // Set the data-key attribute
-                  onClick={handleCardSelect} // No need to pass the key here
-                >
-                  Select Card {index}
-                </button>
-              ))}
+              <StorytellerMessage key={storyTeller.name} storyteller={storyTeller} player={player} />
+              <Scoreboard messagesRes={messagesRes} singlePlayer={player} />
+              {!checkOwner && <VoteStatusMonitor voteStatus={voteStatus} />}
+              {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus} />}
+              <Grid container spacing={2} padding={1}>
+                {!checkStoryTeller && !checkOwner && buttons.map((key, index) => (
+                  <Grid item xs={4} key={index}>
+                    <DixitCard
+                      key={index}
+                      id={index} // Set the data-key attribute
+                      checkClick={() => handleCardSelect(index)} // No need to pass the key here
+                    />
+                  </Grid>
+                ))}
+              </Grid>
               {checkOwner && buttons.map((key, index) => (
                 <button
                   key={index}
