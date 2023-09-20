@@ -8,7 +8,6 @@ function DixitCard({key, checkClick, id}) {
   const cardStyle = {
     width: '100px',
     height: '150px',
-    // backgroundImage: "dixit-back.png", // Replace with your card image URL
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     cursor: 'pointer',
