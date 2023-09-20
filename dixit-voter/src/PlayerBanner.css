@@ -1,0 +1,28 @@
+@font-face{
+  font-family: Dilana;
+  src: url(dilana.ttf)
+}
+
+.banner{
+  background-image: url(small-banner.png);
+  background-size: 'contain';
+  background-repeat: no-repeat;
+  display: inline-block;
+  width: 140px;
+  position: relative;
+  top: 20px;
+  height: 20px;
+}
+
+#capital{
+  position: relative;
+  bottom: 22px;
+  left: 16px;
+}
+
+#capital-rest{
+  position: relative;
+  bottom: 22px;
+  left: 16px;
+  font-weight: bold;
+}
