@@ -6,7 +6,7 @@ import OwnerStatusMontior from './OwnerStatusMonitor';
 import Scoreboard from './Scoreboard';
 import StorytellerMessage from './StorytellerMessage';
 import DixitCard from './DixitCard';
-import { Grid, Button } from '@mui/material';
+import { Grid, Button, Box } from '@mui/material';
 import PlayerBanner from './PlayerBanner';
 
 const socket = io('http://localhost:3000'); // Replace with your server's URL
@@ -243,11 +243,27 @@ function App() {
               >
                 Get Score Update
               </Button>}
-              {showStartGame && <button
-                onClick={startGame} // No need to pass the key here
-              >
-                Start Game
-              </button>}
+              {showStartGame && (
+                <Box display="flex" justifyContent="center" marginTop="16px">
+                  <Button
+                    className="startgame"
+                    onClick={startGame}
+                    variant="contained"
+                    color="primary"
+                    style={{
+                      position: 'absolute', // Set absolute positioning
+                      left: '50%', // Center horizontally
+                      top: '50%', // Center vertically
+                      transform: 'translate(-50%, -50%)', // Center both horizontally and vertically
+                      width: '200px',
+                      height: '50px',
+                      borderRadius: '50px',
+                    }}
+                  >
+                    Start Game
+                  </Button>
+                </Box>
+              )}
             </div>
             {!checkOwner && <VoteStatusMonitor voteStatus={voteStatus} />}
             {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus} />}
