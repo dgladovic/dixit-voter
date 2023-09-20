@@ -6,7 +6,7 @@ import OwnerStatusMontior from './OwnerStatusMonitor';
 import Scoreboard from './Scoreboard';
 import StorytellerMessage from './StorytellerMessage';
 import DixitCard from './DixitCard';
-import { Grid } from '@mui/material';
+import { Grid, Button } from '@mui/material';
 import PlayerBanner from './PlayerBanner';
 
 const socket = io('http://localhost:3000'); // Replace with your server's URL
@@ -28,6 +28,7 @@ function App() {
   const [checkOwner, setCheckOwner] = useState(false);
   const [checkStoryTeller, setCheckStoryTeller] = useState(false);
   const [enableScore, setEnableScore] = useState(false);
+  const [showStartGame, setShowStartGame] = useState(true);
 
   // proverava da li su svi glasali, ukoliko jesu, onda se moze raditi glasanje za kartu
 
@@ -67,19 +68,18 @@ function App() {
     socket.on('storyteller', (message) => {
       let newStoryteller = JSON.parse(message);
       setStoryteller(newStoryteller);
+      setShowStartGame(false);
     });
-  }, [storyTeller]);
+  }, []);
 
   useEffect(() => {
     // Listen for storyteller update
-      console.log('storytellere',storyTeller);
       if (storyTeller.name === player.name) {
         setCheckStoryTeller(true);
       }
       else {
         setCheckStoryTeller(false);
       }
-
   }, [storyTeller.name]);
 
   useEffect(() => {
@@ -235,16 +235,19 @@ function App() {
                 ))}
               </Grid>
 
-              {enableScore && checkStoryTeller && <button
+              {enableScore && checkStoryTeller && <Button
                 onClick={handleScore} // No need to pass the key here
+                style={{width:'100%', height:'50px', marginTop:'16px'}}
+                variant="contained"
+                color="primary"
               >
                 Get Score Update
-              </button>}
-              <button
+              </Button>}
+              {showStartGame && <button
                 onClick={startGame} // No need to pass the key here
               >
                 Start Game
-              </button>
+              </button>}
             </div>
             {!checkOwner && <VoteStatusMonitor voteStatus={voteStatus} />}
             {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus} />}
