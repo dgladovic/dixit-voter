@@ -7,6 +7,7 @@ import Scoreboard from './Scoreboard';
 import StorytellerMessage from './StorytellerMessage';
 import DixitCard from './DixitCard';
 import { Grid } from '@mui/material';
+import PlayerBanner from './PlayerBanner';
 
 const socket = io('http://localhost:3000'); // Replace with your server's URL
 
@@ -65,17 +66,21 @@ function App() {
     // Listen for storyteller update
     socket.on('storyteller', (message) => {
       let newStoryteller = JSON.parse(message);
-      console.log('storytellere', newStoryteller);
       setStoryteller(newStoryteller);
-      if (newStoryteller.name === player.name) {
+    });
+  }, [storyTeller]);
+
+  useEffect(() => {
+    // Listen for storyteller update
+      console.log('storytellere',storyTeller);
+      if (storyTeller.name === player.name) {
         setCheckStoryTeller(true);
       }
       else {
         setCheckStoryTeller(false);
       }
 
-    });
-  }, [storyTeller]);
+  }, [storyTeller.name]);
 
   useEffect(() => {
     // Listen for players voting status
@@ -186,15 +191,15 @@ function App() {
 
   return (
     <div>
-      {/* <h1>Welcome to Dixit</h1> */}
       {firstLog === true ?
-        <UserInfoRoomSelection socket={socket} rooms={rooms} handlePlayer={setPlayerContext} />
+        <div style={{ padding: '8px' }}>
+          <h1>Welcome to </h1>
+          <span style={{fontFamily:'Dilana', fontSize:'64px'}}>Dixit</span>
+          <UserInfoRoomSelection socket={socket} rooms={rooms} handlePlayer={setPlayerContext} />
+        </div>
         :
-        <div>
-          <h2>
-            <div style={{ display: 'inline-block', width: '40px', height: '40px', backgroundColor: player.color }} />
-            {player.name}
-          </h2>
+        <div style={{ padding: '8px' }}>
+          <PlayerBanner player={player} />
           <div>
             <div>
               {/* <div>
@@ -242,7 +247,7 @@ function App() {
               </button>
             </div>
             {!checkOwner && <VoteStatusMonitor voteStatus={voteStatus} />}
-              {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus} />}
+            {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus} />}
             {/* <div>
               {messages.map((message, index) => (
                 <div key={index}>{message}</div>
