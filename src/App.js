@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import UserInfoRoomSelection from './UserInfoRoomSelection';
 import VoteStatusMonitor from './VoteStatusMonitor';
@@ -9,10 +9,11 @@ import DixitCard from './DixitCard';
 import { Grid, Button, Box } from '@mui/material';
 import PlayerBanner from './PlayerBanner';
 
-console.log(process.env.REACT_APP_API_URL)
+console.log(process.env.REACT_APP_API_URL);
+
 const socket = io(process.env.REACT_APP_API_URL,
   { autoConnect: false }
-  ); // Replace with your server's URL
+);
 
 function App() {
   const [rooms, setRooms] = useState([]);
@@ -25,6 +26,7 @@ function App() {
   const [firstLog, setFirstLog] = useState(true);
   const [voteStatus, setVoteStatus] = useState([]);
   const [ownershipStatus, setOwnershipStatus] = useState([]);
+  const [connected,setConnected] = useState(false);
 
 
 
@@ -32,10 +34,15 @@ function App() {
   const [checkStoryTeller, setCheckStoryTeller] = useState(false);
   const [enableScore, setEnableScore] = useState(false);
   const [showStartGame, setShowStartGame] = useState(true);
-
   // proverava da li su svi glasali, ukoliko jesu, onda se moze raditi glasanje za kartu
 
   const setPlayerContext = (data) => {
+
+    // data
+    // playerName: name,
+    // roomName: room,
+    // color: selectedColor,
+
     setCurrentRoom(data.roomName);
     const Player = {
       id: '',
@@ -44,10 +51,43 @@ function App() {
       color: data.color
     }
     setPlayer(Player);
-    console.log(Player, 'test');
     setFirstLog(false);
     socket.emit('joinRoom', JSON.stringify(data));
   }
+
+  useEffect(() => {
+    const sessionID = localStorage.getItem("sessionID");
+    if(sessionID){
+      console.log('hej')
+      // setFirstLog(false);
+      socket.auth = {sessionID};
+      socket.connect();
+    //   setConnected(true);
+      // socket.emit('joinRoom', JSON.stringify());
+          // data
+    // playerName: name,
+    // roomName: room,
+    // color: selectedColor,
+    }
+  }, []);
+
+  useEffect(() => {
+    // Listen for session update
+    socket.on('session', ({ sessionID, userID, userScore, name, roomName }) => {
+      socket.auth = {sessionID};
+      localStorage.setItem("sessionID",sessionID);
+      socket.userID = userID;
+      socket.userScore = userScore;
+      socket.name = name;
+      socket.roomName = roomName;
+      if(roomName){
+        console.log(socket,'socketo');
+        setFirstLog(false);
+      }
+
+      // sve se vraca na socket, kako bi on sadrzao sve sto je bitno za sesiju
+    });
+  }, []);
 
   useEffect(() => {
     // Listen for cards to render
@@ -55,7 +95,7 @@ function App() {
       let newMess = JSON.parse(message);
       setButtons(newMess);
     });
-  }, [buttons]);
+  }, []);
 
   useEffect(() => {
     // Listen for cards state update
@@ -64,7 +104,7 @@ function App() {
       console.log('message', JSON.parse(message))
       setMessages([...messages, message]);
     });
-  }, [messages]);
+  }, []);
 
   useEffect(() => {
     // Listen for storyteller update
@@ -107,7 +147,7 @@ function App() {
       }
     });
 
-  }, [voteStatus]);
+  }, []);
 
   useEffect(() => {
     // Listen for players voting status
@@ -130,7 +170,7 @@ function App() {
       }
     });
 
-  }, [ownershipStatus]);
+  }, []);
 
   useEffect(() => {
     // Listen for scoring update
@@ -139,7 +179,7 @@ function App() {
       console.log('scores', message);
       setMessagesRes(result);
     });
-  }, [messagesRes]);
+  }, []);
 
   useEffect(() => {
     // Update the list of rooms whenever it changes
@@ -147,7 +187,7 @@ function App() {
       console.log(updatedRooms, 'hejo');
       setRooms(JSON.parse(updatedRooms));
     });
-  }, [rooms]);
+  }, []);
 
   const handleCardSelect = (event) => {
     const key = event; // Get the key from data-key attribute

@@ -17,8 +17,8 @@ function PlayerBanner({ player }) {
           <div style={{display:'flex', justifyContent:'flex-start', marginBottom:'12px', marginTop:'12px'}}>
 
             <div className="banner">
-              <span id="capital" style={{ fontFamily: 'Dilana', fontSize: '38px', textTransform:'capitalize' }}>{player.name[0]}</span>
-              <span id="capital-rest" style={{ fontFamily: 'Dilana', fontSize: '28px'}}>{player.name.slice(1)}</span>
+              {/* <span id="capital" style={{ fontFamily: 'Dilana', fontSize: '38px', textTransform:'capitalize' }}>{player.name[0]}</span> */}
+              {/* <span id="capital-rest" style={{ fontFamily: 'Dilana', fontSize: '28px'}}>{player.name.slice(1)}</span> */}
             </div>
             
             <div style={{display:'flex', alignItems:'center', marginTop:'11px'}}>
