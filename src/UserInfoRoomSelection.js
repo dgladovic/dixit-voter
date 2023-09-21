@@ -41,7 +41,6 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer }) => {
     { label: 'White', value: 'rgb(232,235,232)' },
     { label: 'Blue', value: 'rgb(78,109,163)' },
     { label: 'Gray', value: 'rgb(156,157,147)' },
-    { label: 'Light Orange', value: 'rgb(238,99,68)' },
     { label: 'Lime', value: 'rgb(178,203,71)' },
     { label: 'Purple', value: 'rgb(119,57,112)' },
     { label: 'Yellow', value: 'rgb(238,198,32)' },
@@ -67,17 +66,12 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer }) => {
 
   const handleConfirmClick = () => {
     if (name && selectedColor) {
-      // const messageContent = {
-      //   playerName: name,
-      //   roomName: selectedRoom.value,
-      //   color: selectedColor,
-      // };
-      // const message = JSON.stringify(messageContent);
-      // handlePlayer(messageContent);
-      // socket.emit('joinRoom', message);
+      console.log(socket);
+      socket.auth = { name };
+      socket.connect();
+      console.log(socket);
       setIsDialogOpen(true);
     }
-    // setIsDialogOpen(false);
   };
 
   const handleAddNewRoom = () => {
