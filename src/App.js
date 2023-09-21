@@ -9,7 +9,7 @@ import DixitCard from './DixitCard';
 import { Grid, Button, Box } from '@mui/material';
 import PlayerBanner from './PlayerBanner';
 
-const socket = io('http://localhost:3000'); // Replace with your server's URL
+const socket = io(process.env.REACT_APP_API_URL); // Replace with your server's URL
 
 function App() {
   const [rooms, setRooms] = useState([]);
