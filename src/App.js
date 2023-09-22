@@ -212,8 +212,11 @@ function App() {
     // Listen for scoring update
     socket.on('messageRes', (message) => {
       let result = JSON.parse(message);
-      console.log('scores', message);
-      setMessagesRes(result);
+      setMessagesRes(result.players);
+      let njuark = result.players.filter((singlePlayer) => singlePlayer.name === socket.name);
+      socket.userScore = njuark[0].score;
+      updateSession(result.roomName);
+      // update session ! on socket.userScore for this player
     });
   }, []);
 
@@ -224,6 +227,17 @@ function App() {
       setRooms(JSON.parse(updatedRooms));
     });
   }, []);
+
+  const updateSession = (room) =>{
+    const session = {
+      sessionID: socket.sessionID,    // id uredjaja - sesije
+      userID: socket.userID,          // javni id playera
+      userScore: socket.userScore,
+      name: socket.name,
+      roomName: room
+    }
+    socket.emit('updateSession', JSON.stringify(session));
+  }
 
   const handleCardSelect = (event) => {
     const key = event; // Get the key from data-key attribute
