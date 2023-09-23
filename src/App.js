@@ -285,7 +285,7 @@ function App() {
   return (
     <div>
       {firstLog === true ?
-        <div style={{ padding: '8px' }}>
+        <div style={{ padding: '8px', background: 'linear-gradient(166deg, rgba(255,152,0,1) 0%, rgba(254,248,128,1) 100%)', height:'100vh' }}>
           <h1>Welcome to </h1>
           <span style={{fontFamily:'Dilana', fontSize:'64px'}}>Dixit</span>
           <UserInfoRoomSelection socket={socket} rooms={rooms} handlePlayer={setPlayerContext} />
