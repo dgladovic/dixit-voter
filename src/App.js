@@ -58,7 +58,7 @@ function App() {
   }
 
   useEffect(() => {
-    const sessionID = localStorage.getItem("sessionID");
+    const sessionID = sessionStorage.getItem("sessionID");
     if(sessionID){
       console.log('hej',sessionID);
       // setFirstLog(false);
@@ -112,7 +112,7 @@ function App() {
     socket.on('session', ({ sessionID, userID, userScore, name, roomName }) => {
       if(saveSession){
         socket.auth = {sessionID};
-        localStorage.setItem("sessionID",sessionID);
+        sessionStorage.setItem("sessionID",sessionID);
         socket.userID = userID;
         socket.userScore = userScore;
         socket.name = name;
