@@ -8,6 +8,7 @@ import StorytellerMessage from './StorytellerMessage';
 import DixitCard from './DixitCard';
 import { Grid, Button, Box } from '@mui/material';
 import PlayerBanner from './PlayerBanner';
+import logo from './dixit-logo.png';
 
 console.log(process.env.REACT_APP_API_URL);
 
@@ -286,8 +287,7 @@ function App() {
     <div>
       {firstLog === true ?
         <div style={{ padding: '8px', background: 'linear-gradient(166deg, rgba(255,152,0,1) 0%, rgba(254,248,128,1) 100%)', height:'100vh' }}>
-          <h1>Welcome to </h1>
-          <span style={{fontFamily:'Dilana', fontSize:'64px'}}>Dixit</span>
+          <img src={logo} style={{width:'80%', margin: 'auto', display:'block', marginTop:'4px', marginBottom:'8px',maxWidth:'200px'}}/>
           <UserInfoRoomSelection socket={socket} rooms={rooms} handlePlayer={setPlayerContext} />
         </div>
         :
