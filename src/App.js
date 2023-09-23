@@ -238,6 +238,13 @@ function App() {
       roomName: room
     }
     socket.emit('updateSession', JSON.stringify(session));
+    let PlayerUpdate = {
+      name: socket.name,
+      score: socket.userScore,
+      color: player.color,
+      id: player.id
+    }
+    setPlayer(PlayerUpdate);
   }
 
   const handleCardSelect = (event) => {
