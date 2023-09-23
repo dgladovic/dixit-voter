@@ -311,7 +311,7 @@ function App() {
               <Scoreboard messagesRes={messagesRes} singlePlayer={player} />
 
 
-              <Grid container spacing={2} padding={1}>
+              <Grid container spacing={2} padding={1} style={{maxHeight:'400px', overflow:'scroll'}}>
                 {!checkStoryTeller && !checkOwner && buttons.map((key, index) => (
                   <Grid item xs={4} key={index}>
                     <DixitCard
