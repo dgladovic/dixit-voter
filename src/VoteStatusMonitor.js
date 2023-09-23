@@ -12,7 +12,7 @@ function VoteStatusMonitor({ voteStatus }) {
   }, [voteStatus]);
 
   return (
-    <div>
+    <div style={{position:'absolute', bottom: '0px', width:'300px', left:'calc(calc(100% - 300px)/2)'}}>
       <h3>Players Who Haven't Voted:</h3>
       <ul>
         {playersNotVoted.map((player) => (
