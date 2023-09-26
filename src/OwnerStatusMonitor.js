@@ -13,7 +13,7 @@ function OwnerStatusMontior({ voteStatus }) {
   }, [voteStatus]);
 
   return (
-    <div style={{position:'absolute', bottom: '0px', width:'300px', left:'10px', border:'solid red 2px'}}>
+    <div style={{position:'absolute', bottom: '0px', width:'300px', left:'10px'}}>
       <h4 style={{ marginLeft: '8px', marginBottom:'8px'}}>Players Who Haven't Set Ownership:</h4>
       <Grid container spacing={2} padding={1}>
       {playersNotVoted.map((player, index) => 
