@@ -36,7 +36,7 @@ function DixitCard({key, checkClick, id}) {
       style={cardStyle}
       onClick={handleClick}
     >
-      <Typography variant='h4' style={customTypographyStyle}> {id}</Typography>
+      <Typography variant='h4' style={customTypographyStyle}> {id + 1}</Typography>
     </div>
   );
 }
