@@ -229,6 +229,16 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {
+    // Update the list of rooms whenever it changes
+    socket.on('roomNotFound', (message) => {
+      console.log(message, 'roomNotFound');
+      sessionStorage.removeItem("sessionID");
+      setFirstLog(true);
+      setSaveSession(true);
+    });
+  }, []);
+
   const updateSession = (room) =>{
     const session = {
       sessionID: socket.sessionID,    // id uredjaja - sesije
