@@ -73,13 +73,14 @@ function App() {
 
   useEffect(() => {
     // Listen for session update
-    socket.on('session', ({ sessionID, userID, userScore, name, roomName }) => {
+    socket.on('session', ({ sessionID, userID, userScore, name, roomName, color }) => {
       console.log(socket,'socketo-sesija');
       socket.auth = {sessionID};
       socket.userID = userID;
       socket.userScore = userScore;
       socket.name = name;
       socket.roomName = roomName;
+      socket.color = color;
       console.log(socket,'socketo-sesija-nakondodele');
       // sa servera preko session kanala dobija podatke o sesiji
       // ti podaci se stavljaju na socket konekciju
@@ -100,7 +101,7 @@ function App() {
           id: '',
           name: socket.name,
           score: socket.userScore,
-          // color: data.color
+          color: socket.color
         }
         setPlayer(Player);
       }
@@ -109,7 +110,7 @@ function App() {
 
   useEffect(() => {
     // Listen for session update
-    socket.on('session', ({ sessionID, userID, userScore, name, roomName }) => {
+    socket.on('session', ({ sessionID, userID, userScore, name, roomName, color }) => {
       if(saveSession){
         socket.auth = {sessionID};
         sessionStorage.setItem("sessionID",sessionID);
@@ -117,6 +118,7 @@ function App() {
         socket.userScore = userScore;
         socket.name = name;
         socket.roomName = roomName;
+        socket.color = color;
         // sa servera preko session kanala dobija podatke o sesiji
         // ti podaci se stavljaju na socket konekciju
         // i zatim se proverava, ukoliko socket ima roomName, znaci da je vec bio u sobi 
@@ -245,7 +247,8 @@ function App() {
       userID: socket.userID,          // javni id playera
       userScore: socket.userScore,
       name: socket.name,
-      roomName: room
+      roomName: room,
+      color: socket.color
     }
     socket.emit('updateSession', JSON.stringify(session));
     let PlayerUpdate = {
