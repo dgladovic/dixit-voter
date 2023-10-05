@@ -9,6 +9,12 @@ import DixitCard from './DixitCard';
 import { Grid, Button, Box } from '@mui/material';
 import PlayerBanner from './PlayerBanner';
 import logo from './dixit-logo.png';
+import RoomNotFoundListener from './NetworkHandlers/RoomNotFoundListener';
+import MessagesListener from './NetworkHandlers/MessagesListener';
+import CardListListener from './NetworkHandlers/CardListListener';
+import RoomListListener from './NetworkHandlers/RoomListListener';
+import ScoreUpdateListener from './NetworkHandlers/ScoreUpdateListener';
+
 
 console.log(process.env.REACT_APP_API_URL);
 
@@ -19,8 +25,8 @@ const socket = io(process.env.REACT_APP_API_URL,
 function App() {
   const [rooms, setRooms] = useState([]);
   const [messages, setMessages] = useState([]);
-  const [messagesRes, setMessagesRes] = useState([]);
-  const [buttons, setButtons] = useState([]);
+  const [scoresUpdate, setScoresUpdate] = useState([]);
+  const [displayedCards, setDisplayedCards] = useState([]);
   const [player, setPlayer] = useState({});
   const [storyTeller, setStoryteller] = useState({});
   const [currentRoom, setCurrentRoom] = useState('');
@@ -39,12 +45,6 @@ function App() {
   // proverava da li su svi glasali, ukoliko jesu, onda se moze raditi glasanje za kartu
 
   const setPlayerContext = (data) => {
-
-    // data
-    // playerName: name,
-    // roomName: room,
-    // color: selectedColor,
-
     setCurrentRoom(data.roomName);
     const Player = {
       id: '',
@@ -67,7 +67,6 @@ function App() {
       // kada se konektuje na socket sa vec sacuvanim session id radi se
       // na serveru socket.emit(session)
       // i onda se pokrece useEffect ispod ovoga
-
     }
   }, []);
 
@@ -127,23 +126,23 @@ function App() {
     });
   }, []);
 
-  useEffect(() => {
-    // Listen for cards to render
-    socket.on('cardList', (message) => {
-      let newMess = JSON.parse(message);
-      console.log(newMess,'socketo-cards');
-      setButtons(newMess);
-    });
-  }, []);
+  // useEffect(() => {
+  //   // Listen for cards to render
+  //   socket.on('cardList', (message) => {
+  //     let newMess = JSON.parse(message);
+  //     console.log(newMess,'socketo-cards');
+  //     setDisplayedCards(newMess);
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    // Listen for cards state update
-    socket.on('message', (message) => {
-      JSON.parse(message);
-      console.log('message', JSON.parse(message))
-      setMessages([...messages, message]);
-    });
-  }, []);
+  // useEffect(() => {
+  //   // Listen for cards state update
+  //   socket.on('message', (message) => {
+  //     JSON.parse(message);
+  //     console.log('message', JSON.parse(message))
+  //     setMessages([...messages, message]);
+  //   });
+  // }, []);
 
   useEffect(() => {
     // Listen for storyteller update
@@ -211,35 +210,35 @@ function App() {
 
   }, []);
 
-  useEffect(() => {
-    // Listen for scoring update
-    socket.on('messageRes', (message) => {
-      let result = JSON.parse(message);
-      setMessagesRes(result.players);
-      let njuark = result.players.filter((singlePlayer) => singlePlayer.name === socket.name);
-      socket.userScore = njuark[0].score;
-      updateSession(result.roomName);
-      // update session ! on socket.userScore for this player
-    });
-  }, []);
+  // useEffect(() => {
+  //   // Listen for scoring update
+  //   socket.on('scoreUpdate', (message) => {
+  //     let result = JSON.parse(message);
+  //     setMessagesRes(result.players);
+  //     let njuark = result.players.filter((singlePlayer) => singlePlayer.name === socket.name);
+  //     socket.userScore = njuark[0].score;
+  //     updateSession(result.roomName);
+  //     // update session ! on socket.userScore for this player
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    // Update the list of rooms whenever it changes
-    socket.on('roomList', (updatedRooms) => {
-      console.log(updatedRooms, 'hejo');
-      setRooms(JSON.parse(updatedRooms));
-    });
-  }, []);
+  // useEffect(() => {
+  //   // Update the list of rooms whenever it changes
+  //   socket.on('roomList', (updatedRooms) => {
+  //     console.log(updatedRooms, 'hejo');
+  //     setRooms(JSON.parse(updatedRooms));
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    // Update the list of rooms whenever it changes
-    socket.on('roomNotFound', (message) => {
-      console.log(message, 'roomNotFound');
-      sessionStorage.removeItem("sessionID");
-      setFirstLog(true);
-      setSaveSession(true);
-    });
-  }, []);
+  // useEffect(() => {
+  //   // Update the list of rooms whenever it changes
+  //   socket.on('roomNotFound', (message) => {
+  //     console.log(message, 'roomNotFound');
+  //     sessionStorage.removeItem("sessionID");
+  //     setFirstLog(true);
+  //     setSaveSession(true);
+  //   });
+  // }, []);
 
   const updateSession = (room) =>{
     const session = {
@@ -305,6 +304,15 @@ function App() {
 
   return (
     <div>
+      {/* NETWORK  LISTENERS */}
+      <CardListListener socket={socket} setDisplayedCards={setDisplayedCards}/>
+      <MessagesListener socket={socket} setMessages={setMessages} messages={messages}/>
+      <ScoreUpdateListener socket={socket} setScoresUpdate={setScoresUpdate} updateSession={updateSession} />
+      <RoomListListener socket={socket} setRooms={setRooms}/>
+      <RoomNotFoundListener socket={socket} setFirstLog={setFirstLog} setSaveSession={setSaveSession} />
+
+
+      {/* NETWORK  LISTENERS */}
       {firstLog === true ?
         <div style={{ padding: '8px', background: 'linear-gradient(166deg, rgba(255,152,0,1) 0%, rgba(254,248,128,1) 100%)', height:'100vh' }}>
           <img src={logo} style={{width:'80%', margin: 'auto', display:'block', marginTop:'4px', marginBottom:'8px',maxWidth:'200px'}}/>
@@ -321,11 +329,11 @@ function App() {
                 ))}
               </div> */}
               <StorytellerMessage key={storyTeller.name} storyteller={storyTeller} player={player} />
-              <Scoreboard messagesRes={messagesRes} singlePlayer={player} />
+              <Scoreboard scoresUpdate={scoresUpdate} singlePlayer={player} />
 
 
               <Grid container spacing={2} padding={1} style={{maxHeight:'400px', overflow:'scroll'}}>
-                {!checkStoryTeller && !checkOwner && buttons.map((key, index) => (
+                {!checkStoryTeller && !checkOwner && displayedCards.map((key, index) => (
                   <Grid item xs={4} key={index}>
                     <DixitCard
                       key={index}
@@ -337,7 +345,7 @@ function App() {
               </Grid>
 
               <Grid container spacing={2} padding={1}>
-                {checkOwner && buttons.map((key, index) => (
+                {checkOwner && displayedCards.map((key, index) => (
                   <Grid item xs={4} key={index}>
                     <DixitCard
                       key={index}
