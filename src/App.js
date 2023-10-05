@@ -13,6 +13,7 @@ import PlayerVoteListener from './NetworkHandlers/PlayerVoteListener';
 import PlayerOwnershipListener from './NetworkHandlers/PlayerOwnershipListener';
 import SessionController from './NetworkHandlers/SessionController';
 import TableTop from './TableTop';
+import LandingPage from './LandingPage';
 
 console.log(process.env.REACT_APP_API_URL);
 
@@ -98,10 +99,7 @@ function App() {
       {/* NETWORK  LISTENERS */}
 
       {firstLog === true ?
-        <div style={{ padding: '8px', background: 'linear-gradient(166deg, rgba(255,152,0,1) 0%, rgba(254,248,128,1) 100%)', height:'100vh' }}>
-          <img src={logo} style={{width:'80%', margin: 'auto', display:'block', marginTop:'4px', marginBottom:'8px',maxWidth:'200px'}}/>
-          <UserInfoRoomSelection socket={socket} rooms={rooms} handlePlayer={setPlayerContext} />
-        </div>
+        <LandingPage socket={socket} rooms={rooms} setPlayerContext={setPlayerContext}/>
         :
         <TableTop socket={socket} player={player} storyTeller={storyTeller} voteStatus={voteStatus} 
           ownershipStatus={ownershipStatus} scoresUpdate={scoresUpdate} checkStoryTeller={checkStoryTeller} 
