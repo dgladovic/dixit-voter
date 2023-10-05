@@ -14,6 +14,7 @@ import MessagesListener from './NetworkHandlers/MessagesListener';
 import CardListListener from './NetworkHandlers/CardListListener';
 import RoomListListener from './NetworkHandlers/RoomListListener';
 import ScoreUpdateListener from './NetworkHandlers/ScoreUpdateListener';
+import StoryTellerListener from './NetworkHandlers/StoryTellerListener';
 
 
 console.log(process.env.REACT_APP_API_URL);
@@ -144,24 +145,24 @@ function App() {
   //   });
   // }, []);
 
-  useEffect(() => {
-    // Listen for storyteller update
-    socket.on('storyteller', (message) => {
-      let newStoryteller = JSON.parse(message);
-      setStoryteller(newStoryteller);
-      setShowStartGame(false);
-    });
-  }, []);
+  // useEffect(() => {
+  //   // Listen for storyteller update
+  //   socket.on('storyteller', (message) => {
+  //     let newStoryteller = JSON.parse(message);
+  //     setStoryteller(newStoryteller);
+  //     setShowStartGame(false);
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    // Listen for storyteller update
-      if (storyTeller.name === player.name) {
-        setCheckStoryTeller(true);
-      }
-      else {
-        setCheckStoryTeller(false);
-      }
-  }, [storyTeller.name]);
+  // useEffect(() => {
+  //   // Listen for storyteller update
+  //     if (storyTeller.name === player.name) {
+  //       setCheckStoryTeller(true);
+  //     }
+  //     else {
+  //       setCheckStoryTeller(false);
+  //     }
+  // }, [storyTeller.name]);
 
   useEffect(() => {
     // Listen for players voting status
@@ -307,10 +308,12 @@ function App() {
       {/* NETWORK  LISTENERS */}
       <CardListListener socket={socket} setDisplayedCards={setDisplayedCards}/>
       <MessagesListener socket={socket} setMessages={setMessages} messages={messages}/>
+      <StoryTellerListener socket={socket} storyTeller={storyTeller} player={player} 
+        setCheckStoryTeller={setCheckStoryTeller} setStoryteller={setStoryteller} setShowStartGame={setShowStartGame}
+      />
       <ScoreUpdateListener socket={socket} setScoresUpdate={setScoresUpdate} updateSession={updateSession} />
       <RoomListListener socket={socket} setRooms={setRooms}/>
       <RoomNotFoundListener socket={socket} setFirstLog={setFirstLog} setSaveSession={setSaveSession} />
-
 
       {/* NETWORK  LISTENERS */}
       {firstLog === true ?

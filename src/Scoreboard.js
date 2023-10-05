@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Grid } from '@mui/material';
 
-function Scoreboard({ messagesRes, singlePlayer }) {
+function Scoreboard({ scoresUpdate, singlePlayer }) {
   const [players, setPlayers] = useState([]);
 
   useEffect(() => {
     // Listen for changes in the messagesRes prop
-    setPlayers(messagesRes); // Assuming messagesRes is an array of players
-    console.log(messagesRes,'receiver');
+    setPlayers(scoresUpdate); // Assuming messagesRes is an array of players
+    console.log(scoresUpdate,'receiver');
     // Optionally, you can add more logic here to process the messagesRes data
-  }, [messagesRes]);
+  }, [scoresUpdate]);
 
   return (
     <>
