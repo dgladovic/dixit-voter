@@ -15,6 +15,8 @@ import CardListListener from './NetworkHandlers/CardListListener';
 import RoomListListener from './NetworkHandlers/RoomListListener';
 import ScoreUpdateListener from './NetworkHandlers/ScoreUpdateListener';
 import StoryTellerListener from './NetworkHandlers/StoryTellerListener';
+import PlayerVoteListener from './NetworkHandlers/PlayerVoteListener';
+import PlayerOwnershipListener from './NetworkHandlers/PlayerOwnershipListener';
 
 
 console.log(process.env.REACT_APP_API_URL);
@@ -125,6 +127,7 @@ function App() {
       }
       setSaveSession(false);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // useEffect(() => {
@@ -164,52 +167,52 @@ function App() {
   //     }
   // }, [storyTeller.name]);
 
-  useEffect(() => {
-    // Listen for players voting status
-    socket.on('playerVoteStatus', (message) => {
+  // useEffect(() => {
+  //   // Listen for players voting status
+  //   socket.on('playerVoteStatus', (message) => {
 
-      let allVoters = JSON.parse(message);
-      let allVoted = true;
-      console.log(allVoters, 'testmeup ');
-      setVoteStatus(allVoters);
-      for (let i = 0; i < allVoters.length; i++) {
-        let voter = allVoters[i];
-        if (!voter.voted) {
-          allVoted = false;
-          setCheckOwner(false);
-          break;
-        }
-      }
+  //     let allVoters = JSON.parse(message);
+  //     let allVoted = true;
+  //     console.log(allVoters, 'testmeup ');
+  //     setVoteStatus(allVoters);
+  //     for (let i = 0; i < allVoters.length; i++) {
+  //       let voter = allVoters[i];
+  //       if (!voter.voted) {
+  //         allVoted = false;
+  //         setCheckOwner(false);
+  //         break;
+  //       }
+  //     }
 
-      if (allVoted) {
-        setCheckOwner(true);
-      }
-    });
+  //     if (allVoted) {
+  //       setCheckOwner(true);
+  //     }
+  //   });
 
-  }, []);
+  // }, []);
 
-  useEffect(() => {
-    // Listen for players voting status
-    socket.on('playerOwnershipStatus', (message) => {
+  // useEffect(() => {
+  //   // Listen for players voting status
+  //   socket.on('playerOwnershipStatus', (message) => {
 
-      let allVoters = JSON.parse(message);
-      let allVoted = true;
-      setOwnershipStatus(allVoters);
-      for (let i = 0; i < allVoters.length; i++) {
-        let voter = allVoters[i];
-        if (!voter.votedOwnership) {
-          allVoted = false;
-          setEnableScore(false);
-          break;
-        }
-      }
+  //     let allVoters = JSON.parse(message);
+  //     let allVoted = true;
+  //     setOwnershipStatus(allVoters);
+  //     for (let i = 0; i < allVoters.length; i++) {
+  //       let voter = allVoters[i];
+  //       if (!voter.votedOwnership) {
+  //         allVoted = false;
+  //         setEnableScore(false);
+  //         break;
+  //       }
+  //     }
 
-      if (allVoted) {
-        setEnableScore(true);
-      }
-    });
+  //     if (allVoted) {
+  //       setEnableScore(true);
+  //     }
+  //   });
 
-  }, []);
+  // }, []);
 
   // useEffect(() => {
   //   // Listen for scoring update
@@ -311,6 +314,8 @@ function App() {
       <StoryTellerListener socket={socket} storyTeller={storyTeller} player={player} 
         setCheckStoryTeller={setCheckStoryTeller} setStoryteller={setStoryteller} setShowStartGame={setShowStartGame}
       />
+      <PlayerVoteListener socket={socket} setVoteStatus={setVoteStatus} setCheckOwner={setCheckOwner} />
+      <PlayerOwnershipListener socket={socket} setOwnershipStatus={setOwnershipStatus} setEnableScore={setEnableScore}/>
       <ScoreUpdateListener socket={socket} setScoresUpdate={setScoresUpdate} updateSession={updateSession} />
       <RoomListListener socket={socket} setRooms={setRooms}/>
       <RoomNotFoundListener socket={socket} setFirstLog={setFirstLog} setSaveSession={setSaveSession} />
