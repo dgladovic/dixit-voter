@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect} from 'react';
 
 const StoryTellerListener = ({socket, setStoryteller, setShowStartGame, setCheckStoryTeller, storyTeller, player}) =>{
