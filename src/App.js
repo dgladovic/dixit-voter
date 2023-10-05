@@ -21,23 +21,29 @@ const socket = io(process.env.REACT_APP_API_URL,
 );
 
 function App() {
-  const [rooms, setRooms] = useState([]);
-  const [messages, setMessages] = useState([]);
-  const [scoresUpdate, setScoresUpdate] = useState([]);
-  const [displayedCards, setDisplayedCards] = useState([]);
   const [player, setPlayer] = useState({});
-  const [storyTeller, setStoryteller] = useState({});
-  const [currentRoom, setCurrentRoom] = useState('');
   const [firstLog, setFirstLog] = useState(true);
-  const [voteStatus, setVoteStatus] = useState([]);
-  const [ownershipStatus, setOwnershipStatus] = useState([]);
-  const [saveSession,setSaveSession] = useState(true);
-
-  const [checkOwner, setCheckOwner] = useState(false);
-  const [checkStoryTeller, setCheckStoryTeller] = useState(false);
-  const [enableScore, setEnableScore] = useState(false);
   const [showStartGame, setShowStartGame] = useState(true);
-  // proverava da li su svi glasali, ukoliko jesu, onda se moze raditi glasanje za kartu
+  //SessionController
+  const [saveSession,setSaveSession] = useState(true);
+  //CardListListener
+  const [displayedCards, setDisplayedCards] = useState([]);
+  //MessagesListener
+  const [messages, setMessages] = useState([]);
+  //StoryTellerlistener
+  const [storyTeller, setStoryteller] = useState({});
+  const [checkStoryTeller, setCheckStoryTeller] = useState(false);
+  //PlayerVoteListener
+  const [voteStatus, setVoteStatus] = useState([]);
+  const [checkOwner, setCheckOwner] = useState(false);
+  //PlayerOwnershipListener
+  const [ownershipStatus, setOwnershipStatus] = useState([]);
+  const [enableScore, setEnableScore] = useState(false);
+  //ScoreUpdateListener
+  const [scoresUpdate, setScoresUpdate] = useState([]);
+  //RoomListListener
+  const [rooms, setRooms] = useState([]);
+  const [currentRoom, setCurrentRoom] = useState('');
 
   const setPlayerContext = (data) => {
     setCurrentRoom(data.roomName);
