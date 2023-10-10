@@ -11,7 +11,7 @@ function DixitCard({key, checkClick, id}) {
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     cursor: 'pointer',
-    border: selected ? '2px solid #ff0000' : '2px solid transparent', // Add a border when selected
+    border: selected ? '2px solid #ff0000' : '2px solid white', // Add a border when selected
     borderRadius: '8px',
     display:'flex', 
     justifyContent:'center', 

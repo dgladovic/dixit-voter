@@ -7,6 +7,7 @@ import StorytellerMessage from './StorytellerMessage';
 import DixitCard from './DixitCard';
 import { Grid, Button, Box } from '@mui/material';
 import PlayerBanner from './PlayerBanner';
+import TransitionMessage from './TransitionMessage';
 
 const TableTop = ({
     socket, player, storyTeller, voteStatus, ownershipStatus, scoresUpdate,
@@ -60,7 +61,7 @@ const TableTop = ({
 
 
     return (
-        <div style={{ padding: '8px' }}>
+        <div style={{ padding: '8px', background: 'linear-gradient(166deg, rgba(255,152,0,1) 0%, rgba(254,248,128,1) 100%)',height:'100vh' }}>
         <PlayerBanner player={player} />
         <div>
           <div>
@@ -84,7 +85,8 @@ const TableTop = ({
                 </Grid>
               ))}
             </Grid>
-
+            {checkOwner && <TransitionMessage key={checkOwner}/>}
+            {/* Set Ownership of Cards */}
             <Grid container spacing={2} padding={1}>
               {checkOwner && displayedCards.map((key, index) => (
                 <Grid item xs={4} key={index}>
