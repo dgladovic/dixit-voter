@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Grid } from '@mui/material';
+import { Card, CardContent, Typography, Grid, ListItem, List } from '@mui/material';
 
 function Scoreboard({ scoresUpdate, singlePlayer }) {
   const [players, setPlayers] = useState([]);
@@ -13,13 +13,13 @@ function Scoreboard({ scoresUpdate, singlePlayer }) {
 
   return (
     <>
-    <Grid container spacing={2} padding={1}>
+    <List>
       {players.map((player, index) => 
       singlePlayer.name !== player.name ? 
-      (<Grid item xs={3} key={index}>
+      (<ListItem xs={3} key={index}>
           <Card style={{backgroundColor: player.color,
           width:'fit-content',
-          maxWidth:'80px',
+          maxWidth:'160px',
           height:'40px',
           display:'flex',
           alignItems:'center',
@@ -28,11 +28,33 @@ function Scoreboard({ scoresUpdate, singlePlayer }) {
               <Typography variant="h12" style={{textOverflow: 'ellipsis', overflow:'hidden', marginLeft:'4px'}}>{player.name} </Typography>
               <Typography variant="h12" style={{whiteSpace:'nowrap', fontWeight:'bold', marginRight:'4px'}}>: {player.score}</Typography>
           </Card>
-        </Grid>
+        </ListItem>
       ): '')}
-    </Grid>
+    </List>
     </>
   );
 }
+
+// {!enableScore && <List class='carousel'>
+// {!checkStoryTeller && !checkOwner && displayedCards.map((key, index) => (
+//   <ListItem>
+//     <DixitCard
+//       key={index}
+//       id={index} // Set the data-key attribute
+//       checkClick={() => handleCardSelect(index)} // No need to pass the key here
+//     />
+//   </ListItem>
+// ))}
+// {checkOwner && displayedCards.map((key, index) => (
+//   <ListItem>
+//   <DixitCard
+//       key={index}
+//       id={index} // Set the data-key attribute
+//       checkClick={() => handleCardVote(index)} // No need to pass the key here
+//     />
+//   </ListItem>
+// ))}
+// </List>}
+
 
 export default Scoreboard;

@@ -29,7 +29,7 @@ function StorytellerMessage({ key, storyteller, player }) {
         </div>
       ) : storyteller.name && (
         <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-            <span id="capitalS" style={{ fontFamily: 'Dilana', fontSize: '36px', textTransform: 'capitalize' }}>{storyteller.name[0]}</span>
+            <span id="capitalS" style={{ fontFamily: 'Dilana', fontSize: '36px', textTransform: 'capitalize', textOverflow:'ellipsis'}}>{storyteller.name[0]}</span>
             <span id="capitalS-rest" style={{ fontFamily: 'Dilana', fontSize: '28px' }}>{storyteller.name.slice(1)}</span>
             <span style={{marginLeft:'12px'}}>Is telling a story</span>
         </div>
