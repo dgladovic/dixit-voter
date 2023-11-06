@@ -5,7 +5,7 @@ import OwnerStatusMontior from './OwnerStatusMonitor';
 import Scoreboard from './Scoreboard';
 import StorytellerMessage from './StorytellerMessage';
 import DixitCard from './DixitCard';
-import { Grid, Button, Box } from '@mui/material';
+import { Grid, Button, Box, List, Listitem, Stack, ListItem } from '@mui/material';
 import PlayerBanner from './PlayerBanner';
 import TransitionMessage from './TransitionMessage';
 import Footer from './Footer';
@@ -81,36 +81,49 @@ const TableTop = ({
               You are the storyteller ! SPEAK
             </div>
             }
-            <Grid container spacing={2} padding={1} style={{maxHeight:'400px', overflow:'scroll'}}>
+            
+            {!enableScore && <List class='carousel'>
               {!checkStoryTeller && !checkOwner && displayedCards.map((key, index) => (
-                <Grid item xs={4} key={index}>
+                <ListItem>
                   <DixitCard
                     key={index}
                     id={index} // Set the data-key attribute
                     checkClick={() => handleCardSelect(index)} // No need to pass the key here
                   />
-                </Grid>
+                </ListItem>
               ))}
-            </Grid>
-            {checkOwner && <TransitionMessage key={checkOwner}/>}
-            {/* Set Ownership of Cards */}
-            <Grid container spacing={2} padding={1}>
               {checkOwner && displayedCards.map((key, index) => (
-                <Grid item xs={4} key={index}>
-                  <DixitCard
+                <ListItem>
+                <DixitCard
                     key={index}
                     id={index} // Set the data-key attribute
                     checkClick={() => handleCardVote(index)} // No need to pass the key here
                   />
-                </Grid>
+                </ListItem>
               ))}
-            </Grid>
+            </List>}
+
+            {!enableScore  && <div style={{marginTop:'12px', alignSelf:'center'}}>
+                Swipe left or right to choose a card.
+              </div>}
+
+            {checkOwner && <TransitionMessage key={checkOwner}/>}
+            {/* Set Ownership of Cards */}
+            {/* <List class='carousel'>
+              {checkOwner && displayedCards.map((key, index) => (
+                <ListItem>
+                <DixitCard
+                    key={index}
+                    id={index} // Set the data-key attribute
+                    checkClick={() => handleCardVote(index)} // No need to pass the key here
+                  />
+                </ListItem>
+              ))}
+            </List> */}
 
             {enableScore && checkStoryTeller && <Button
               onClick={handleScore} // No need to pass the key here
-              style={{width:'100%', height:'50px', marginTop:'16px'}}
-              variant="contained"
-              color="primary"
+              class='updateScore'
             >
               Get Score Update
             </Button>}
