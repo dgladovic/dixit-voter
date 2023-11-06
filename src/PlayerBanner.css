@@ -26,3 +26,22 @@
   left: 16px;
   font-weight: bold;
 }
+
+.banner-container{
+  display: flex;
+  justify-content: flex-start;
+  margin-top:12px;
+  padding-bottom:30px;
+  border-bottom: 2px solid black;
+}
+
+@media (max-height: 400px) {
+
+  .banner-container{
+    display: flex;
+    justify-content: flex-start;
+    margin-top:12px;
+    padding-bottom:30px;
+    border-bottom: 0px solid black;
+  }
+}

@@ -14,7 +14,7 @@ function PlayerBanner({ player }) {
 
   return (
 
-          <div style={{display:'flex', justifyContent:'flex-start', marginBottom:'12px', marginTop:'12px', borderBottom:'2px solid black', paddingBottom:'30px'}}>
+          <div class='banner-container'>
 
             <div className="banner">
               <span id="capital" style={{ fontFamily: 'Dilana', fontSize: '38px', textTransform:'capitalize' }}>{player.name[0]}</span>

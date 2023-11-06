@@ -1,15 +1,27 @@
 .storyteller-message {
-  /* position: fixed; */
-  /* top: 50%; */
-  /* left: 50%; */
-  /* transform: translate(-50%, -50%); */
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
-  /* animation: fadeOut 4s forwards; */
+  margin-top: 8px;
+  position: relative;
+  top: 0px;
+  right: 0px;
 }
 
+@media (max-height: 400px) {
+
+  /* transform: translate(-50%, -50%); */
+  .storyteller-message{
+    position: fixed;
+    top: 8px;
+    right: 6px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    width: 180px;
+    margin-top: 0px;
+  }
+}
 /* @keyframes fadeOut {
   0% {
     opacity: 1;

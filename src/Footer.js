@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Card, Typography } from '@mui/material';
 import Scoreboard from './Scoreboard';
+import './Footer.css';
 
 function Footer({ scoresUpdate,player }) {
   const [playersNotVoted, setPlayersNotVoted] = useState([]);
@@ -14,7 +15,7 @@ function Footer({ scoresUpdate,player }) {
   // }, [voteStatus]);
 
   return (
-    <div style={{position:'fixed', bottom:'0px', margin:'auto', marginTop:'12px', borderTop:'2px solid black', width:'96%'}}>
+    <div class='footer'>
       {/* <h4 style={{}}>Check scores here!</h4> */}
       <Scoreboard scoresUpdate={scoresUpdate} singlePlayer={player} />
     </div>

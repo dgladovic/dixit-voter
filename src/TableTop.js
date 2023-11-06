@@ -9,6 +9,7 @@ import { Grid, Button, Box } from '@mui/material';
 import PlayerBanner from './PlayerBanner';
 import TransitionMessage from './TransitionMessage';
 import Footer from './Footer';
+import './TableTop.css';
 
 const TableTop = ({
     socket, player, storyTeller, voteStatus, ownershipStatus, scoresUpdate,
@@ -62,10 +63,9 @@ const TableTop = ({
 
 
     return (
-        <div style={{ padding: '8px', background: 'linear-gradient(166deg, rgba(255,152,0,1) 0%, rgba(254,248,128,1) 100%)',height:'98.8%' }}>
-        <PlayerBanner player={player} />
-        <div>
-          <div>
+        <div class='origin'>
+          <PlayerBanner player={player} class='banner'/>
+          <div class='origin-inner'>
             {/* <div>
               {messagesRes.map((message, index) => (
                 <div style={{ border: 'solid red 1px' }} key={index}>{message}</div>
@@ -138,13 +138,12 @@ const TableTop = ({
           </div>
           {/* {!checkOwner && <VoteStatusMonitor voteStatus={voteStatus} />} */}
           {/* {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus} />} */}
-          <Footer scoresUpdate={scoresUpdate} player={player}/>
+          <Footer class='origin-footer' scoresUpdate={scoresUpdate} player={player}/>
           {/* <div>
             {messages.map((message, index) => (
               <div key={index}>{message}</div>
             ))}
           </div> */}
-        </div>
       </div>
     );
 }
