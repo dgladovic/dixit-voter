@@ -79,7 +79,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div style={{height:'98.8vh'}}>
 
       {/* NETWORK  LISTENERS */}
       <SessionController socket={socket} saveSession={saveSession} setFirstLog={setFirstLog} 
@@ -105,6 +105,7 @@ function App() {
           ownershipStatus={ownershipStatus} scoresUpdate={scoresUpdate} checkStoryTeller={checkStoryTeller} 
           checkOwner={checkOwner} displayedCards={displayedCards} enableScore={enableScore} 
           showStartGame={showStartGame} currentRoom={currentRoom}
+          style={{height:'97.6vh', overflow:'hidden', margin:'0' }}
         />
       }
 

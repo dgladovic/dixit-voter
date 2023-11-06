@@ -10,7 +10,7 @@ const LandingPage = ({
 
 
     return (
-        <div style={{ padding: '8px', background: 'linear-gradient(166deg, rgba(255,152,0,1) 0%, rgba(254,248,128,1) 100%)', height:'100vh' }}>
+        <div style={{ padding: '8px', background: 'linear-gradient(166deg, rgba(255,152,0,1) 0%, rgba(254,248,128,1) 100%)', height:'97.6vh' }}>
           <img src={logo} style={{width:'80%', margin: 'auto', display:'block', marginTop:'4px', marginBottom:'8px',maxWidth:'200px'}}/>
           <UserInfoRoomSelection socket={socket} rooms={rooms} handlePlayer={setPlayerContext} />
         </div>

@@ -8,6 +8,7 @@ import DixitCard from './DixitCard';
 import { Grid, Button, Box } from '@mui/material';
 import PlayerBanner from './PlayerBanner';
 import TransitionMessage from './TransitionMessage';
+import Footer from './Footer';
 
 const TableTop = ({
     socket, player, storyTeller, voteStatus, ownershipStatus, scoresUpdate,
@@ -61,7 +62,7 @@ const TableTop = ({
 
 
     return (
-        <div style={{ padding: '8px', background: 'linear-gradient(166deg, rgba(255,152,0,1) 0%, rgba(254,248,128,1) 100%)',height:'100vh' }}>
+        <div style={{ padding: '8px', background: 'linear-gradient(166deg, rgba(255,152,0,1) 0%, rgba(254,248,128,1) 100%)',height:'98.8%' }}>
         <PlayerBanner player={player} />
         <div>
           <div>
@@ -71,9 +72,15 @@ const TableTop = ({
               ))}
             </div> */}
             <StorytellerMessage key={storyTeller.name} storyteller={storyTeller} player={player} />
-            <Scoreboard scoresUpdate={scoresUpdate} singlePlayer={player} />
+            {/* <Scoreboard scoresUpdate={scoresUpdate} singlePlayer={player} /> */}
 
-
+            {!showStartGame && checkStoryTeller && !checkOwner &&
+            <div style={{position:'fixed', top:'50%', left:'17%', backgroundColor: 'rgb(0,0,0,0.8)', color: 'white',
+            padding: '10px 20px',
+            borderRadius: '5px'}}>
+              You are the storyteller ! SPEAK
+            </div>
+            }
             <Grid container spacing={2} padding={1} style={{maxHeight:'400px', overflow:'scroll'}}>
               {!checkStoryTeller && !checkOwner && displayedCards.map((key, index) => (
                 <Grid item xs={4} key={index}>
@@ -129,8 +136,9 @@ const TableTop = ({
               </Box>
             )}
           </div>
-          {!checkOwner && <VoteStatusMonitor voteStatus={voteStatus} />}
-          {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus} />}
+          {/* {!checkOwner && <VoteStatusMonitor voteStatus={voteStatus} />} */}
+          {/* {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus} />} */}
+          <Footer scoresUpdate={scoresUpdate} player={player}/>
           {/* <div>
             {messages.map((message, index) => (
               <div key={index}>{message}</div>

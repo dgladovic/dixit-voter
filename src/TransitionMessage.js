@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './StorytellerMessage.css'; // Import the CSS file
+import './TransitionMessage.css'; // Import the CSS file
 
 function TransitionMessage({ key }) {
   const [isVisible, setIsVisible] = useState(true);
@@ -20,7 +20,7 @@ function TransitionMessage({ key }) {
   }
 
   return (
-    <div className="storyteller-message">
+    <div className="transition-message">
         <div>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}>
             <span id="capitalS" style={{ fontFamily: 'Dilana', fontSize: '36px', textTransform: 'capitalize' }}>O</span>
