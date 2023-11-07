@@ -60,6 +60,16 @@ const TableTop = ({
         socket.emit('startGame', message);
       }
 
+      const slideLeft = () => {
+        var slider = document.getElementsByClassName('carousel')[0];
+        slider.scrollLeft = slider.scrollLeft - 160;
+      }
+
+      const slideRight = () => {
+        var slider = document.getElementsByClassName('carousel')[0];
+        slider.scrollLeft = slider.scrollLeft + 160;
+      }
+
 
 
     return (
@@ -82,6 +92,8 @@ const TableTop = ({
             </div>
             }
             
+            <div class='sliderGroup'>
+              {/* <div class='blur' onClick={slideLeft}> </div> */}
             {!enableScore && <List class='carousel'>
               {!checkStoryTeller && !checkOwner && displayedCards.map((key, index) => (
                 <ListItem>
@@ -102,9 +114,11 @@ const TableTop = ({
                 </ListItem>
               ))}
             </List>}
+              {/* <div class='blurright' onClick={slideRight}></div> */}
+            </div>
 
-            {!enableScore  && <div style={{marginTop:'12px', alignSelf:'center'}}>
-                Swipe left or right to choose a card.
+            {!enableScore  && <div class='helper-text'>
+                Swipe left or right and tap to choose a card.
               </div>}
 
             {checkOwner && <TransitionMessage key={checkOwner}/>}

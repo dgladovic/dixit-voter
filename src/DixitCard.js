@@ -6,8 +6,6 @@ function DixitCard({key, checkClick, id}) {
 
   const [selected, setSelected] = useState(false);
   const cardStyle = {
-    width: '140px',
-    height: '220px',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     cursor: 'pointer',

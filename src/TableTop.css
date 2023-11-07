@@ -1,7 +1,7 @@
 .origin{
     padding: 16px;
     background: linear-gradient(166deg, rgba(255,152,0,1) 0%, rgba(254,248,128,1) 100%);
-    height: 98.8%;
+    height: 96.4%;
     display: grid;
     grid-template-rows: 70px auto 70px;
     grid-template-columns: auto;
@@ -12,18 +12,61 @@
     flex-direction: column;
 }
 
+.sliderGroup{
+    display: flex;
+    align-items: center;
+    /* border: solid green 2px; */
+    margin-top: 24px;
+}
+
+/* .blur{
+    border: solid blue 2px;
+    height: 230px;
+    width: 25px;
+    position: absolute;
+    right: 20px;
+    backdrop-filter: blur(2px);
+    mask-image: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    z-index: 10;
+}
+
+.blurright{
+    border: solid blue 2px;
+    height: 230px;
+    width: 25px;
+    position: absolute;
+    left: 20px;
+    backdrop-filter: blur(2px);
+    mask-image: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+} */
+
+#leftSlider{
+    position: relative;
+    right: -10px;
+}
+
+#rightSlider{
+    position: relative;
+    left: -10px;
+}
+
 .carousel{
     display: flex;
     flex-direction: row;
     overflow-x: scroll;
-    gap: 10px;
     justify-content: flex-start;
-    max-width: 300px;
+    max-width: 340px;
     margin: auto;
     margin-block-start: 0px;
     padding-inline-start: 0px;
-    margin-top: 24px;
     margin-bottom: 0px;
+    /* border: 1px solid red; */
+    scroll-behavior: smooth;
+    
+}
+
+.carousel > *{
+    padding: 8px;
 }
 
 .updateScore{
@@ -36,12 +79,19 @@
     margin: auto;
 }
 
+.helper-text{
+    margin-top: 12px;
+    align-self: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+}
+
 @media (max-height: 400px) {
     .origin{
         display: grid;
         grid-template-rows: 70px auto;
         grid-template-columns: auto 180px;
-        height: 96.8%;
+        height: 92.5%;
     }
 
     .origin-inner{
@@ -80,6 +130,17 @@
         width: 180px;
         height: 180px;
         margin: auto;
+    }
+
+    .sliderGroup{
+        display: flex;
+        align-items: center;
+        /* border: solid green 2px; */
+        margin-top: 0px;
+    }
+
+    .helper-text{
+        margin-top: 0px;
     }
 
 

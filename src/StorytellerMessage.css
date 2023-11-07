@@ -15,11 +15,11 @@
   /* transform: translate(-50%, -50%); */
   .storyteller-message{
     position: fixed;
-    top: 8px;
-    right: 6px;
+    top: 16px;
+    right: 14px;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
-    width: 180px;
+    /* width: 180px; */
     margin-top: 0px;
   }
 }
