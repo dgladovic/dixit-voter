@@ -69,7 +69,7 @@
 }
 
 .carousel > *{
-    padding: 8px;
+    padding: 8px !important;
 }
 
 .updateScore{
