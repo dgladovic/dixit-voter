@@ -21,7 +21,7 @@ function PlayerBanner({ player }) {
               <span id="capital-rest" style={{ fontFamily: 'Dilana', fontSize: '28px'}}>{player.name.slice(1)}</span>
             </div>
             
-            <div style={{display:'flex', alignItems:'center', marginTop:'11px'}}>
+            <div style={{display:'flex', alignItems:'center', marginTop:'20px'}}>
             <Star />:
             <span style={{fontWeight:'bold'}}>{player.score}</span>
             </div>

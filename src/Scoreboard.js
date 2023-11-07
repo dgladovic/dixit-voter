@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Grid, ListItem, List } from '@mui/material';
+import './Scoreboard.css';
 
 function Scoreboard({ scoresUpdate, singlePlayer }) {
   const [players, setPlayers] = useState([]);
@@ -13,19 +14,16 @@ function Scoreboard({ scoresUpdate, singlePlayer }) {
 
   return (
     <>
-    <List>
+    <List class="score">
       {players.map((player, index) => 
       singlePlayer.name !== player.name ? 
       (<ListItem xs={3} key={index}>
-          <Card style={{backgroundColor: player.color,
-          width:'fit-content',
-          maxWidth:'160px',
-          height:'40px',
-          display:'flex',
-          alignItems:'center',
-          justifyContent:'flex-start',
+          <Card 
+          class="score-field"
+          style={{color: player.color,
+                  borderColor: player.color
           }}>
-              <Typography variant="h12" style={{textOverflow: 'ellipsis', overflow:'hidden', marginLeft:'4px'}}>{player.name} </Typography>
+              <Typography variant="h12" style={{textOverflow: 'ellipsis', overflow:'hidden', marginLeft:'4px', textTransform:'capitalize', fontWeight:'bold' }}>{player.name} </Typography>
               <Typography variant="h12" style={{whiteSpace:'nowrap', fontWeight:'bold', marginRight:'4px'}}>: {player.score}</Typography>
           </Card>
         </ListItem>
