@@ -1,13 +1,24 @@
 .transition-message {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  /* position: fixed; */
+  /* top: 50%; */
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
   border-radius: 5px;
-  animation: fadeOut 4s forwards;
+  /* margin-top: 12px; */
+  padding: 8px;
+  align-self: flex-end;
+  margin: auto;
+  margin-bottom: 16px;
+  /* animation: fadeOut 4s forwards; */
+}
+
+.title{
+  display: flex; 
+  justify-content: center;
+  align-items: flex-end;
 }
 
 /* @keyframes fadeOut {
@@ -18,6 +29,23 @@
     opacity: 0;
   }
 } */
+
+@media (max-height: 400px) {
+  .transition-message{
+    position: fixed;
+    top: 16px;
+    left: 210px;
+    width: 200px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    margin-top: 0px;
+  }
+
+  .title{
+    display: none;
+    height: 100%;
+  }
+}
 
 @font-face{
   font-family: Dilana;

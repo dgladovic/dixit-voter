@@ -121,7 +121,7 @@ const TableTop = ({
                 Swipe left or right and tap to choose a card.
               </div>}
 
-            {checkOwner && <TransitionMessage key={checkOwner}/>}
+            {checkOwner && <TransitionMessage key={checkOwner} class='transition'/>}
             {/* Set Ownership of Cards */}
             {/* <List class='carousel'>
               {checkOwner && displayedCards.map((key, index) => (
