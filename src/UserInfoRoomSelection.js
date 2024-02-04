@@ -9,16 +9,18 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  InputLabel,
   Avatar,
   List,
   ListItem,
   ListItemText,
   MenuItem,
-  Select
+  Select,
+  FormControl
 } from '@mui/material';
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 
-const UserInfoRoomSelection = ({ socket, rooms, handlePlayer }) => {
+const UserInfoRoomSelection = ({ socket, rooms, handlePlayer, animationPhase }) => {
   const [name, setName] = useState('');
   const [selectedPicture, setSelectedPicture] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
@@ -105,33 +107,37 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer }) => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <Card style={{ backgroundColor: selectedColor, width: '90%', maxWidth: '400px' }}>
+    <div className={`dialogAppear ${animationPhase}`} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <Card style={{ backgroundColor: 'transparent', width: '90%', maxWidth: '400px', boxShadow: 'none' }}>
         <CardHeader
           title={
             <TextField
               label="Your Name"
-              variant="outlined"
+              variant="filled"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              fullWidth
+              style={{border: 'solid 1px', borderColor:'rgb(55,55,55)', borderRadius:'4px', width:'100%'}}
             />
           }
-          avatar={
-            <div
-              style={{ cursor: 'pointer' }}
-              onClick={() => setIsAvatarDialogOpen(true)}
-            >
-              <Avatar src={selectedPicture} alt="Avatar" />
-            </div>
-          }
+          // avatar={
+          //   <div
+          //     style={{ cursor: 'pointer' }}
+          //     onClick={() => setIsAvatarDialogOpen(true)}
+          //   >
+          //     <Avatar src={selectedPicture} alt="Avatar" />
+          //   </div>
+          // }
         />
-        <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop:'-16px' }}>
+          <FormControl variant="filled" style={{width:'100%'}}>
+          <InputLabel id="color">Pick a color</InputLabel>
           <Select
-            placeholder="Pick a color"
+            labelId="color"
+            label="Pick a color"
+            id="color"
             value={selectedColor}
             onChange={(e) => setSelectedColor(e.target.value)}
-            style={{ width: '100%' }}
+            style={{ width: '100%', border: 'solid 1px', borderColor: 'rgb(55, 55, 55)' }}
           >
             {playerColors.map((colorOption) => (
               <MenuItem key={colorOption.value} value={colorOption.value}>
@@ -139,41 +145,45 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer }) => {
               </MenuItem>
             ))}
           </Select>
-
+          </FormControl>
           <Button
-            style={{ width: '60%', marginTop: '16px' }}
+            style={{ width: '60%', marginTop: '36px', color: 'white', backgroundColor:'black', height:'50px' }}
             variant="contained"
-            color="primary"
+            // color="primary"
             onClick={handleConfirmClick}
           >
             Confirm
           </Button>
-
+          
           <Dialog
             open={isDialogOpen}
             onClose={() => setIsDialogOpen(false)}
           >
-            <DialogTitle>Selec a room to join</DialogTitle>
+            <DialogTitle>Select a room to join</DialogTitle>
             <DialogContent>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between',flexDirection:'column' }}>
                 <TextField
-                  style={{ width: '70%' }}
+                  style={{ width: '100%' }}
                   label="Room Name"
-                  variant="outlined"
+                  variant="filled"
                   value={newRoomName}
                   onChange={(e) => setNewRoomName(e.target.value)}
                 />
                 <div
-                  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                  style={{ display: 'flex', 
+                  justifyContent: 'flex-start', alignItems: 'center', 
+                  width:'100%', marginTop:'24px', color:'#1976d2',
+                  fontWeight:"bold", fontFamily:'Helvetica'
+                }}
                   onClick={handleAddNewRoom}
                 >
                   <AddCircleOutline
-
                     variant="contained"
                     color="primary"
+                    style={{paddingRight:'8px', paddingBottom:'2px'}}
                   >
                   </AddCircleOutline>
-                  Add
+                  Create room
 
                 </div>
               </div>

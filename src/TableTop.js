@@ -147,7 +147,6 @@ const TableTop = ({
                   className="startgame"
                   onClick={startGame}
                   variant="contained"
-                  color="primary"
                   style={{
                     position: 'absolute', // Set absolute positioning
                     left: '50%', // Center horizontally
@@ -155,7 +154,7 @@ const TableTop = ({
                     transform: 'translate(-50%, -50%)', // Center both horizontally and vertically
                     width: '200px',
                     height: '50px',
-                    borderRadius: '50px',
+                    backgroundColor:'black'
                   }}
                 >
                   Start Game
