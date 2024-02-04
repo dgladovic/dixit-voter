@@ -16,7 +16,7 @@ function Footer({ scoresUpdate,player }) {
 
   return (
     <div class='footer'>
-      {/* <h4 style={{}}>Check scores here!</h4> */}
+      <h4 style={{textAlign:'center'}}>SCOREBOARD</h4>
       <Scoreboard scoresUpdate={scoresUpdate} singlePlayer={player} />
     </div>
   );

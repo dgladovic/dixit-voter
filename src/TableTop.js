@@ -95,16 +95,6 @@ const TableTop = ({
               You are the storyteller
             </div>
             } */}
-
-            {!showStartGame && !checkStoryTeller && !checkOwner &&
-            <div style={{position:'fixed', top:'70%', left:'17%', backgroundColor: 'transparent', color: 'black',
-            padding: '10px 20px',
-            fontWeight:'700',
-            fontSize:'20px',
-            borderRadius: '5px'}}>
-              Pick a card
-            </div>
-            }
             
             <div class='sliderGroup'>
               {/* <div class='blur' onClick={slideLeft}> </div> */}
@@ -131,10 +121,10 @@ const TableTop = ({
               {/* <div class='blurright' onClick={slideRight}></div> */}
             </div>
 
-            {/* {!enableScore  && <div class='helper-text'> 
-                Swipe left or right and tap to choose a card.
+            {!showStartGame && !checkStoryTeller && !checkOwner && <div class='helper-text'> 
+                Pick a card
               </div>
-            } */}
+            }
 
             {/* {checkOwner && <TransitionMessage key={checkOwner} class='transition'/>} */}
             {/* Set Ownership of Cards */}
@@ -149,6 +139,8 @@ const TableTop = ({
                 </ListItem>
               ))}
             </List> */}
+
+            {enableScore && <Footer scoresUpdate={scoresUpdate} player={player}/>}
 
             {enableScore && checkStoryTeller && 
             <Button
@@ -189,7 +181,7 @@ const TableTop = ({
           </div>
           {/* {!checkOwner && <VoteStatusMonitor voteStatus={voteStatus} />} */}
           {/* {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus} />} */}
-          <Footer class='origin-footer' scoresUpdate={scoresUpdate} player={player}/>
+          {/* <Footer class='origin-footer' scoresUpdate={scoresUpdate} player={player}/> */}
           {/* <div>
             {messages.map((message, index) => (
               <div key={index}>{message}</div>

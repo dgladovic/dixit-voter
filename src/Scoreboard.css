@@ -1,4 +1,4 @@
-.score{
+/* .score{
   display: flex;
   flex-direction: row;
   padding-left: 0px;
@@ -21,17 +21,19 @@
   padding-right: 6px;
   background-color: white;
   border: solid 2px;
-}
+} */
 
-@media (max-height: 400px) {
+/* @media (max-height: 400px) { */
   .score{
     display: flex;
     flex-direction: column;
     padding-left: 0px;
+    margin: auto;
     margin-top: 8px;
+    width: 100%;
   }
   .score-field{
-    max-width: 160px;
+    /* max-width: 160px; */
     width: 100%;
     height: 40px; 
     display: flex;
@@ -47,4 +49,4 @@
   .score > *{
     padding-right: 0px;
   }
-}
+/* } */
