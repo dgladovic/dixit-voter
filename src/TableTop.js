@@ -81,7 +81,7 @@ const TableTop = ({
                 <div style={{ border: 'solid red 1px' }} key={index}>{message}</div>
               ))}
             </div> */}
-            {!enableScore && !checkOwner && <StorytellerMessage key={storyTeller.name} storyteller={storyTeller} player={player}/>}
+            {!showStartGame && !enableScore && !checkOwner && <StorytellerMessage key={storyTeller.name} storyteller={storyTeller} player={player}/>}
             {!enableScore && checkOwner && <TransitionMessage key={checkOwner} class='transition'/>}
 
             {/* <Scoreboard scoresUpdate={scoresUpdate} singlePlayer={player} /> */}
