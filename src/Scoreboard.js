@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, ListItem, List } from '@mui/material';
-import { Star } from "@mui/icons-material";
+import { Card, CardContent, Typography, ListItem, List, Divider } from '@mui/material';
+import { HorizontalSplit, Star } from "@mui/icons-material";
 import './Scoreboard.css';
 
 function Scoreboard({ scoresUpdate, singlePlayer }) {
@@ -26,13 +26,16 @@ function Scoreboard({ scoresUpdate, singlePlayer }) {
             <Card
               className="score-field"
               style={{
-                color: player.color,
-                borderColor: player.color
+                color: 'black',
+                borderColor: 'black',
+                boxShadow:'none',
+                border:'none'
               }}>
               <Star style={{color: player.color}}/>
               <Typography variant="h12" style={{ textOverflow: 'ellipsis', overflow: 'hidden', marginLeft: '4px', textTransform: 'capitalize', fontWeight: 'bold' }}>{player.name} </Typography>
               <Typography variant="h12" style={{ whiteSpace: 'nowrap', fontWeight: 'bold', marginRight: '4px' }}>: {player.score}</Typography>
             </Card>
+            {index !== sortedPlayers.length - 1 && <Divider/>}
           </ListItem>
         ))}
       </List>
