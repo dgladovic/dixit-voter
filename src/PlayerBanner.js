@@ -21,14 +21,14 @@ function PlayerBanner({ player }) {
               <span id="capital-rest" style={{ fontFamily: 'Dilana', fontSize: '28px'}}>{player.name.slice(1)}</span>
             </div>
             
-            <div style={{display:'flex', alignItems:'center', marginTop:'20px'}}>
-            <Star />:
-            <span style={{fontWeight:'bold'}}>{player.score}</span>
+            <div style={{display:'flex', alignItems:'center', marginTop:'20px', marginRight:'16px'}}>
+              <div style={{display:'inline-block', marginRight:'-16px', marginTop:'6px'}}>
+                <Star style={{fontSize:'28px', color:'black',position:'relative', top:'0px',left:'0px'}}/>
+                <Star style={{fontSize:'20px', color: player.color, position:'relative', top:'-4px',left:'-24px', zIndex:50}}/>
+              </div>
+              <span style={{fontWeight:'bold'}}>{player.score}</span>
             </div>
           </div>
-
-
-    
   );
 }
 

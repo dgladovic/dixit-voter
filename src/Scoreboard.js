@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Grid, ListItem, List } from '@mui/material';
+import {Star} from "@mui/icons-material";
 import './Scoreboard.css';
 
 function Scoreboard({ scoresUpdate, singlePlayer }) {
@@ -23,7 +24,8 @@ function Scoreboard({ scoresUpdate, singlePlayer }) {
           style={{color: player.color,
                   borderColor: player.color
           }}>
-              <Typography variant="h12" style={{textOverflow: 'ellipsis', overflow:'hidden', marginLeft:'4px', textTransform:'capitalize', fontWeight:'bold' }}>{player.name} </Typography>
+              <Star/>
+              <Typography variant="h12" style={{textOverflow: 'ellipsis', overflow:'hidden', marginLeft:'4px', textTransform:'capitalize', fontWeight:'bold' }}>{player.name[0]} </Typography>
               <Typography variant="h12" style={{whiteSpace:'nowrap', fontWeight:'bold', marginRight:'4px'}}>: {player.score}</Typography>
           </Card>
         </ListItem>

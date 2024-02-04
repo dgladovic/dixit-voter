@@ -1,19 +1,17 @@
 .transition-message {
-  /* position: fixed; */
-  /* top: 50%; */
-  /* left: 50%; */
-  /* transform: translate(-50%, -50%); */
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
-  /* padding: 10px 20px; */
-  border-radius: 5px;
-  /* margin-top: 12px; */
-  padding: 8px;
-  align-self: flex-end;
-  margin: auto;
-  margin-bottom: 16px;
-  /* animation: fadeOut 4s forwards; */
+  display: flex;
+  align-items: center;
+  padding: 0px 20px;
+  position: relative;
+  top: 0px;
+  right: 0px;
+  max-width: 100%;
+  height: 80px;
 }
+
+
 
 .title{
   display: flex; 

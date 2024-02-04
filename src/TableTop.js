@@ -81,14 +81,28 @@ const TableTop = ({
                 <div style={{ border: 'solid red 1px' }} key={index}>{message}</div>
               ))}
             </div> */}
-            <StorytellerMessage key={storyTeller.name} storyteller={storyTeller} player={player} />
+            {!enableScore && !checkOwner && <StorytellerMessage key={storyTeller.name} storyteller={storyTeller} player={player}/>}
+            {!enableScore && checkOwner && <TransitionMessage key={checkOwner} class='transition'/>}
+
             {/* <Scoreboard scoresUpdate={scoresUpdate} singlePlayer={player} /> */}
 
-            {!showStartGame && checkStoryTeller && !checkOwner &&
-            <div style={{position:'fixed', top:'50%', left:'17%', backgroundColor: 'rgb(0,0,0,0.8)', color: 'white',
+            {/* {!showStartGame && checkStoryTeller && !checkOwner &&
+            <div style={{position:'fixed', top:'50%', left:'17%', backgroundColor: 'transparent', color: 'black',
             padding: '10px 20px',
+            fontWeight:'700',
+            fontSize:'20px',
             borderRadius: '5px'}}>
-              You are the storyteller ! SPEAK
+              You are the storyteller
+            </div>
+            } */}
+
+            {!showStartGame && !checkStoryTeller && !checkOwner &&
+            <div style={{position:'fixed', top:'70%', left:'17%', backgroundColor: 'transparent', color: 'black',
+            padding: '10px 20px',
+            fontWeight:'700',
+            fontSize:'20px',
+            borderRadius: '5px'}}>
+              Pick a card
             </div>
             }
             
@@ -117,11 +131,12 @@ const TableTop = ({
               {/* <div class='blurright' onClick={slideRight}></div> */}
             </div>
 
-            {!enableScore  && <div class='helper-text'>
+            {/* {!enableScore  && <div class='helper-text'> 
                 Swipe left or right and tap to choose a card.
-              </div>}
+              </div>
+            } */}
 
-            {checkOwner && <TransitionMessage key={checkOwner} class='transition'/>}
+            {/* {checkOwner && <TransitionMessage key={checkOwner} class='transition'/>} */}
             {/* Set Ownership of Cards */}
             {/* <List class='carousel'>
               {checkOwner && displayedCards.map((key, index) => (
@@ -135,11 +150,21 @@ const TableTop = ({
               ))}
             </List> */}
 
-            {enableScore && checkStoryTeller && <Button
+            {enableScore && checkStoryTeller && 
+            <Button
+            style={{
+              position: 'absolute', // Set absolute positioning
+              left: '50%', // Center horizontally
+              top: '50%', // Center vertically
+              transform: 'translate(-50%, -50%)', // Center both horizontally and vertically
+              width: '200px',
+              height: '50px',
+              backgroundColor:'black'
+            }}
+              variant="contained"
               onClick={handleScore} // No need to pass the key here
-              class='updateScore'
             >
-              Get Score Update
+              Finish round
             </Button>}
             {showStartGame && (
               <Box display="flex" justifyContent="center" marginTop="16px">

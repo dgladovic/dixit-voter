@@ -4,7 +4,7 @@
 }
 
 .banner{
-  background-image: url(small-banner.png);
+  /* background-image: url(small-banner.png); */
   background-size: 'contain';
   background-repeat: no-repeat;
   display: inline-block;
@@ -29,10 +29,11 @@
 
 .banner-container{
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   margin-top:12px;
   padding-bottom:30px;
-  border-bottom: 2px solid black;
+  /* padding-left: 16px; */
+  /* border-bottom: 1px solid rgb(0,0,0,0.8); */
 }
 
 @media (max-height: 400px) {
