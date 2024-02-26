@@ -5,23 +5,23 @@
 
 .banner{
   /* background-image: url(small-banner.png); */
-  background-size: 'contain';
-  background-repeat: no-repeat;
-  display: inline-block;
-  width: 140px;
-  position: relative;
-  top: 20px;
-  height: 20px;
+  /* display: inline-block; */
+  /* width: 140px; */
+  /* position: relative; */
+  /* top: 20px; */
+  /* height: 20px; */
+  display: flex;
+  align-items: center;
 }
 
 #capital{
-  position: relative;
+  /* position: relative; */
   bottom: 22px;
   left: 16px;
 }
 
 #capital-rest{
-  position: relative;
+  /* position: relative; */
   bottom: 22px;
   left: 16px;
   font-weight: bold;
@@ -30,8 +30,8 @@
 .banner-container{
   display: flex;
   justify-content: space-between;
-  margin-top:12px;
-  padding-bottom:30px;
+  /* margin-top:12px; */
+  /* padding-bottom:30px; */
   /* padding-left: 16px; */
   /* border-bottom: 1px solid rgb(0,0,0,0.8); */
 }
