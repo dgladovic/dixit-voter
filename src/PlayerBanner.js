@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Grid } from '@mui/material';
+import { List, ListItem, Dialog, DialogTitle, DialogContent } from '@mui/material';
 import './PlayerBanner.css';
 import {Star, Settings} from "@mui/icons-material";
 
 function PlayerBanner({ player }) {
   const [players, setPlayers] = useState([]);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const settingsOptions = [
+    {
+      title:'Change Room'
+    },
+    {
+      title:'Change Player Data'
+    }
+  ]
 
   useEffect(() => {
     // Listen for changes in the messagesRes prop
@@ -29,11 +39,31 @@ function PlayerBanner({ player }) {
               <span id="capital-rest" style={{ fontFamily: 'Dilana', fontSize: '28px'}}>{player.name.slice(1)}</span>
             </div>
 
-            <div style={{display:'flex', alignItems:'center', marginRight:'16px', width:'42px', justifyContent:'flex-end'}}>
+            <div style={{display:'flex', alignItems:'center', marginRight:'16px', width:'42px', justifyContent:'flex-end'}}
+            onClick={()=>setIsSettingsOpen(true)}>
               {/* <div style={{display:'inline-block', marginRight:'-16px', marginTop:'6px'}}> */}
                 <Settings style={{fontSize:'28px', color:'black', position:'relative', top:'2px'}}/>
               {/* </div> */}
             </div>
+
+            <Dialog
+            open={isSettingsOpen}
+            onClose={() => setIsSettingsOpen(false)}
+          >
+            <DialogTitle>Options</DialogTitle>
+            <DialogContent>
+              <List>
+                {settingsOptions.map((option) => (
+                  <ListItem
+                    key={option}
+                    button
+                  >
+                    {option.title}
+                  </ListItem>
+                ))}
+              </List>
+            </DialogContent>
+          </Dialog>
             
 
           </div>
