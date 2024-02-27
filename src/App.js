@@ -79,7 +79,7 @@ function App() {
   }
 
   return (
-    <div style={{height:'98.8vh'}}>
+    <div style={{height:'100vh', overflow:'hidden'}}>
 
       {/* NETWORK  LISTENERS */}
       <SessionController socket={socket} saveSession={saveSession} setFirstLog={setFirstLog} 
