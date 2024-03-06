@@ -82,9 +82,9 @@ function App() {
     <div style={{height:'100vh', overflow:'hidden'}}>
 
       {/* NETWORK  LISTENERS */}
-      <SessionController socket={socket} saveSession={saveSession} setFirstLog={setFirstLog} 
+      {/* <SessionController socket={socket} saveSession={saveSession} setFirstLog={setFirstLog} 
         setSaveSession={setSaveSession} setCurrentRoom={setCurrentRoom} setPlayer={setPlayer} 
-      />
+      /> */}
       <CardListListener socket={socket} setDisplayedCards={setDisplayedCards}/>
       <MessagesListener socket={socket} setMessages={setMessages} messages={messages}/> 
       {/* MessagesListener is used for debugging */}

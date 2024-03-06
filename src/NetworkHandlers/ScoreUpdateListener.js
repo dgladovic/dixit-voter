@@ -8,9 +8,11 @@ const ScoreUpdateListener = ({socket, setScoresUpdate, updateSession}) =>{
     socket.on('scoreUpdate', (message) => {
       let result = JSON.parse(message);
       setScoresUpdate(result.players);
-      let njuark = result.players.filter((singlePlayer) => singlePlayer.name === socket.name);
-      socket.userScore = njuark[0].score;
-      updateSession(result.roomName);
+
+      // let njuark = result.players.filter((singlePlayer) => singlePlayer.name === socket.name);
+      // socket.userScore = njuark[0].score;
+      // updateSession(result.roomName);
+
       // update session ! on socket.userScore for this player
     });
   }, []);
