@@ -19,16 +19,17 @@ import {
   FormControl
 } from '@mui/material';
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
+import RoomCreation from './RoomCreation';
 
 const UserInfoRoomSelection = ({ socket, rooms, handlePlayer, animationPhase }) => {
   const [name, setName] = useState('');
   const [selectedPicture, setSelectedPicture] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedRoom, setSelectedRoom] = useState(null);
-  const [newRoomName, setNewRoomName] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isAvatarDialogOpen, setIsAvatarDialogOpen] = useState(false);
   const [isAddRoomOpen, setIsAddRoomOpen] = useState(false);
+  const [roomCreation, setRoomCreation] = useState(false);
 
   const userPictures = [
     { label: 'Avatar 1', value: 'avatar1.jpg' },
@@ -76,12 +77,12 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer, animationPhase }) 
     }
   };
 
-  const handleAddNewRoom = () => {
-    if (newRoomName && newRoomName !== '') {
-      socket.emit('createRoom', newRoomName);
+  const handleAddNewRoom = (roomName) => {
+    if (roomName && roomName !== '') {
+      socket.emit('createRoom', roomName);
       const messageContent = {
         playerName: name,
-        roomName: newRoomName,
+        roomName: roomName,
         color: selectedColor,
       };
       const message = JSON.stringify(messageContent);
@@ -162,33 +163,30 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer, animationPhase }) 
             <DialogTitle>Select a room to join</DialogTitle>
             <DialogContent>
               <div style={{ display: 'flex', justifyContent: 'space-between',flexDirection:'column' }}>
-                <TextField
-                  style={{ width: '100%' }}
-                  label="Room Name"
-                  variant="filled"
-                  value={newRoomName}
-                  onChange={(e) => setNewRoomName(e.target.value)}
-                />
-                <div
-                  style={{ display: 'flex', 
-                  justifyContent: 'flex-start', alignItems: 'center', 
-                  width:'100%', marginTop:'24px', color:'#1976d2',
-                  fontWeight:"bold", fontFamily:'Helvetica'
-                }}
-                  onClick={handleAddNewRoom}
+
+              {!roomCreation && <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'flex-start', alignItems: 'center',
+                    width: '100%', marginTop: '24px', color: '#1976d2',
+                    fontWeight: "bold", fontFamily: 'Helvetica'
+                  }}
+                  onClick={() => setRoomCreation(true)}
                 >
                   <AddCircleOutline
                     variant="contained"
                     color="primary"
-                    style={{paddingRight:'8px', paddingBottom:'2px'}}
+                    style={{ paddingRight: '8px', paddingBottom: '2px' }}
                   >
                   </AddCircleOutline>
                   Create room
-
                 </div>
+              }
               </div>
 
-              <List>
+              {roomCreation && <RoomCreation handleAddNewRoom={handleAddNewRoom}/>}
+
+              {!roomCreation && <List>
                 {rooms.map((room) => (
                   <ListItem
                     key={room.name}
@@ -202,6 +200,7 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer, animationPhase }) 
                   </ListItem>
                 ))}
               </List>
+              }
             </DialogContent>
           </Dialog>
 
