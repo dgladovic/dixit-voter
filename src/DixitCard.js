@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import React, { useState } from 'react';
 import './DixitCard.css'; // Import the CSS file
 
-function DixitCard({key, checkClick, id}) {
+function DixitCard({checkClick, id}) {
 
   const [selected, setSelected] = useState(false);
   const cardStyle = {

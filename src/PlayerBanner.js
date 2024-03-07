@@ -24,7 +24,7 @@ function PlayerBanner({ player }) {
 
   return (
 
-          <div class='banner-container'>
+          <div className='banner-container'>
 
             <div style={{display:'flex', alignItems:'center', marginLeft:'16px', width:'42px'}}>
               <div style={{display:'inline-block', marginRight:'-16px', marginTop:'6px'}}>

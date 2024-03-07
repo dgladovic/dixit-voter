@@ -16,7 +16,8 @@ import {
   ListItemText,
   MenuItem,
   Select,
-  FormControl
+  FormControl,
+  Divider
 } from '@mui/material';
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 import RoomCreation from './RoomCreation';
@@ -164,28 +165,6 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer, animationPhase }) 
             <DialogContent>
               <div style={{ display: 'flex', justifyContent: 'space-between',flexDirection:'column' }}>
 
-              {!roomCreation && <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'flex-start', alignItems: 'center',
-                    width: '100%', marginTop: '24px', color: '#1976d2',
-                    fontWeight: "bold", fontFamily: 'Helvetica'
-                  }}
-                  onClick={() => setRoomCreation(true)}
-                >
-                  <AddCircleOutline
-                    variant="contained"
-                    color="primary"
-                    style={{ paddingRight: '8px', paddingBottom: '2px' }}
-                  >
-                  </AddCircleOutline>
-                  Create room
-                </div>
-              }
-              </div>
-
-              {roomCreation && <RoomCreation handleAddNewRoom={handleAddNewRoom}/>}
-
               {!roomCreation && <List>
                 {rooms.map((room) => (
                   <ListItem
@@ -201,6 +180,27 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer, animationPhase }) 
                 ))}
               </List>
               }
+
+              {!roomCreation && 
+              <div style={{display:'flex',flexDirection:'column'}}>
+                <Divider/>
+              <div
+                  style={{
+                    margin: 'auto',
+                    marginTop: '16px', 
+                    color: '#1976d2',
+                    fontWeight: "bold", fontFamily: 'Helvetica'
+                  }}
+                  onClick={() => setRoomCreation(true)}
+                >
+                  Create room
+                </div>
+                </div>
+              }
+              </div>
+
+              {roomCreation && <RoomCreation handleAddNewRoom={handleAddNewRoom}/>}
+
             </DialogContent>
           </Dialog>
 

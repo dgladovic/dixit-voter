@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './StorytellerMessage.css'; // Import the CSS file
 
-function StorytellerMessage({ key, storyteller, player }) {
+function StorytellerMessage({ storyteller, player }) {
   const [isVisible, setIsVisible] = useState(true);
 
   // useEffect(() => {

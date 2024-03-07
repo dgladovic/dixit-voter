@@ -66,29 +66,27 @@ const TableTop = ({
         socket.emit('startGame', message);
       }
 
-      const slideLeft = () => {
-        var slider = document.getElementsByClassName('carousel')[0];
-        slider.scrollLeft = slider.scrollLeft - 160;
-      }
+      // const slideLeft = () => {
+      //   var slider = document.getElementsByClassName('carousel')[0];
+      //   slider.scrollLeft = slider.scrollLeft - 160;
+      // }
 
-      const slideRight = () => {
-        var slider = document.getElementsByClassName('carousel')[0];
-        slider.scrollLeft = slider.scrollLeft + 160;
-      }
-
-
+      // const slideRight = () => {
+      //   var slider = document.getElementsByClassName('carousel')[0];
+      //   slider.scrollLeft = slider.scrollLeft + 160;
+      // }
 
     return (
-        <div class='origin'>
-          <PlayerBanner player={player} class='banner'/>
-          <div class='origin-inner'>
+        <div className='origin'>
+          <PlayerBanner player={player} className='banner'/>
+          <div className='origin-inner'>
             {/* <div>
               {messagesRes.map((message, index) => (
                 <div style={{ border: 'solid red 1px' }} key={index}>{message}</div>
               ))}
             </div> */}
             {!showStartGame && !enableScore && !checkOwner && <StorytellerMessage key={storyTeller.name} storyteller={storyTeller} player={player}/>}
-            {!enableScore && checkOwner && <TransitionMessage key={checkOwner} class='transition'/>}
+            {!enableScore && checkOwner && <TransitionMessage key={checkOwner} className='transition'/>}
 
             {/* <Scoreboard scoresUpdate={scoresUpdate} singlePlayer={player} /> */}
 
@@ -102,11 +100,11 @@ const TableTop = ({
             </div>
             } */}
             
-            <div class='sliderGroup'>
+            <div className='sliderGroup'>
               {/* <div class='blur' onClick={slideLeft}> </div> */}
-            {!enableScore && <List class='carousel'>
+            {!enableScore && <List className='carousel'>
               {!checkStoryTeller && !checkOwner && displayedCards.map((key, index) => (
-                <ListItem>
+                <ListItem key={index}>
                   <DixitCard
                     key={index}
                     id={index} // Set the data-key attribute
@@ -115,7 +113,7 @@ const TableTop = ({
                 </ListItem>
               ))}
               {checkOwner && displayedCards.map((key, index) => (
-                <ListItem>
+                <ListItem key={index}>
                 <DixitCard
                     key={index}
                     id={index} // Set the data-key attribute
@@ -127,7 +125,7 @@ const TableTop = ({
               {/* <div class='blurright' onClick={slideRight}></div> */}
             </div>
 
-            {!showStartGame && !checkStoryTeller && !checkOwner && <div class='helper-text'> 
+            {!showStartGame && !checkStoryTeller && !checkOwner && <div className='helper-text'> 
                 Pick a card
               </div>
             }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './TransitionMessage.css'; // Import the CSS file
 
-function TransitionMessage({ key }) {
+function TransitionMessage({ }) {
   const [isVisible, setIsVisible] = useState(true);
 
   // useEffect(() => {
@@ -22,7 +22,7 @@ function TransitionMessage({ key }) {
   return (
     <div className="transition-message">
         <div style={{ display:'flex', flexDirection: 'column'}}>
-          <div class='title' >
+          <div className='title' >
             <span id="capitalS" style={{ fontFamily: 'Dilana', fontSize: '36px', textTransform: 'capitalize' }}>O</span>
             <span id="capitalS-rest" style={{ fontFamily: 'Dilana', fontSize: '28px' }}>wnership</span>
           </div>
