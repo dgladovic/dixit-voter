@@ -7,7 +7,7 @@ const CardListListener = ({socket, setDisplayedCards}) =>{
     // Listen for cards to render
     socket.on('cardList', (message) => {
       let newMess = JSON.parse(message);
-      console.log(newMess,'socketo-cards');
+      console.log(newMess,'cardList');
       setDisplayedCards(newMess);
     });
   }, []);

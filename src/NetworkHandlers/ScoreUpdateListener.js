@@ -7,6 +7,7 @@ const ScoreUpdateListener = ({socket, setScoresUpdate, updateSession}) =>{
     // Listen for scoring update
     socket.on('scoreUpdate', (message) => {
       let result = JSON.parse(message);
+      console.log('scoreUpdate',result);
       setScoresUpdate(result.players);
 
       // let njuark = result.players.filter((singlePlayer) => singlePlayer.name === socket.name);

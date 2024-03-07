@@ -7,6 +7,7 @@ const StoryTellerListener = ({socket, setStoryteller, setShowStartGame, setCheck
     // Listen for storyteller update
     socket.on('storyteller', (message) => {
       let newStoryteller = JSON.parse(message);
+      console.log('storyteller',newStoryteller);
       setStoryteller(newStoryteller);
       setShowStartGame(false);
     });

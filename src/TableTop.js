@@ -25,6 +25,7 @@ const TableTop = ({
           room: currentRoom
         };
         const stringSelection = JSON.stringify(playerSelection);
+        console.log('cardVote',stringSelection);
         socket.emit('cardVote', stringSelection);
       };
     
@@ -36,6 +37,7 @@ const TableTop = ({
           room: currentRoom
         };
         const stringSelection = JSON.stringify(playerSelection);
+        console.log('ownerVote',stringSelection);
         socket.emit('ownerVote', stringSelection);
       };
     
@@ -43,12 +45,15 @@ const TableTop = ({
         const objValue = { ...player, room: currentRoom }
         const storyTeller = JSON.stringify(objValue);
         console.log(storyTeller);
+        console.log('ownerVote',storyTeller);
         socket.emit('votingResults', storyTeller);
+        console.log('resetCards',currentRoom);
         socket.emit('resetCards', currentRoom);
         const messageCont = {
           room: currentRoom
         };
         const message = JSON.stringify(messageCont);
+        console.log('getstoryteller',message);
         socket.emit('getstoryteller', message);
       }
     
@@ -57,6 +62,7 @@ const TableTop = ({
           room: currentRoom
         };
         const message = JSON.stringify(messageCont);
+        console.log('startGame',message);
         socket.emit('startGame', message);
       }
 

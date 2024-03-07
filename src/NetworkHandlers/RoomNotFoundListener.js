@@ -6,10 +6,10 @@ const RoomNotFoundListener = ({socket, setFirstLog, setSaveSession}) =>{
 useEffect(() => {
     // Update the list of rooms whenever it changes
     socket.on('roomNotFound', (message) => {
-      console.log(message, 'roomNotFound');
-      sessionStorage.removeItem("sessionID");
+      console.log('roomNotFound',message);
+      // sessionStorage.removeItem("sessionID");
       setFirstLog(true);
-      setSaveSession(true);
+      // setSaveSession(true);
     });
   }, []);
 
