@@ -69,7 +69,7 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer, animationPhase }) 
   const handleConfirmClick = () => {
     if (name && selectedColor) {
       console.log(socket);
-      socket.auth = { name };
+      // socket.auth = { name };
       socket.connect();
       console.log(socket);
       setIsDialogOpen(true);
@@ -77,8 +77,8 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer, animationPhase }) 
   };
 
   const handleAddNewRoom = () => {
-    socket.emit('createRoom', newRoomName);
-    if (newRoomName) {
+    if (newRoomName && newRoomName !== '') {
+      socket.emit('createRoom', newRoomName);
       const messageContent = {
         playerName: name,
         roomName: newRoomName,

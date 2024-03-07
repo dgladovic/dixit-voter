@@ -14,6 +14,7 @@ import PlayerOwnershipListener from './NetworkHandlers/PlayerOwnershipListener';
 import SessionController from './NetworkHandlers/SessionController';
 import TableTop from './TableTop';
 import LandingPage from './LandingPage';
+import ResetRoundListener from './NetworkHandlers/ResetRoundListener';
 
 console.log(process.env.REACT_APP_API_URL);
 
@@ -56,7 +57,7 @@ function App() {
     }
     setPlayer(Player);
     setFirstLog(false);
-    socket.emit('joinRoom', JSON.stringify(data));
+    // socket.emit('joinRoom', JSON.stringify(data));
   }
 
   const updateSession = (room) =>{
@@ -94,6 +95,7 @@ function App() {
       <PlayerVoteListener socket={socket} setVoteStatus={setVoteStatus} setCheckOwner={setCheckOwner} />
       <PlayerOwnershipListener socket={socket} setOwnershipStatus={setOwnershipStatus} setEnableScore={setEnableScore}/>
       <ScoreUpdateListener socket={socket} setScoresUpdate={setScoresUpdate} updateSession={updateSession} />
+      <ResetRoundListener socket={socket} setEnableScore={setEnableScore} setCheckOwner={setCheckOwner}/>
       <RoomListListener socket={socket} setRooms={setRooms}/>
       <RoomNotFoundListener socket={socket} setFirstLog={setFirstLog} setSaveSession={setSaveSession} />
       {/* NETWORK  LISTENERS */}
