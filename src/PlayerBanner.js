@@ -53,9 +53,9 @@ function PlayerBanner({ player }) {
             <DialogTitle>Options</DialogTitle>
             <DialogContent>
               <List>
-                {settingsOptions.map((option) => (
+                {settingsOptions.map((option,id) => (
                   <ListItem
-                    key={option}
+                    key={id}
                     button
                   >
                     {option.title}
