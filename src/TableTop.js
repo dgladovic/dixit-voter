@@ -15,7 +15,7 @@ import './TableTop.css';
 const TableTop = ({
     socket, player, storyTeller, voteStatus, ownershipStatus, scoresUpdate,
     checkStoryTeller, checkOwner, displayedCards, enableScore, showStartGame,
-    currentRoom, winner
+    currentRoom, winner, achievements
 }) => {
 
     const handleCardSelect = (event) => {
@@ -81,7 +81,7 @@ const TableTop = ({
         <div className='origin'>
           <PlayerBanner player={player} className='banner'/>
           {winner ? 
-            <Winner winner={winner}/>
+            <Winner winner={winner} achievements={achievements}/>
             :
             <div className='origin-inner'>
             {/* <div>

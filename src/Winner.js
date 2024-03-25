@@ -9,7 +9,7 @@ import { Button } from '@mui/material';
 
 
 const Winner = ({
-  winner
+  winner,achievements
 }) => {
 
   //   const [animationPhase, setAnimationPhase] = useState('appear');
@@ -35,23 +35,29 @@ const Winner = ({
       <h1 style={{ textTransform: 'capitalize' }}>{winner.name}</h1>
       <StarBorder />
       <h3>you are the best!</h3>
+      {achievements && 
       <div style={{ display: 'flex', marginTop: '40px', width: '90%', justifyContent: 'space-around' }}>
-        <div style={{ border: 'solid 2px black', height: '180px', width: '100px', flexDirection: 'column', display: 'flex', alignItems: 'center' }}>
-          <h3>Dreamer</h3>
+        {achievements.realDeceiver && <div style={{ border: 'solid 2px black', height: '180px', width: '100px', flexDirection: 'column', display: 'flex', alignItems: 'center' }}>
+          <h3>Deceiver</h3>
           <StarBorder />
-          <h3>Milica</h3>
-        </div>
-        <div style={{ border: 'solid 2px black', height: '180px', width: '100px', flexDirection: 'column', display: 'flex', alignItems: 'center' }}>
-          <h3>Talker</h3>
-          <StarBorder />
-          <h3>Ana</h3>
-        </div>
-        <div style={{ border: 'solid 2px black', height: '180px', width: '100px', flexDirection: 'column', display: 'flex', alignItems: 'center' }}>
+          <h3>{achievements.realDeceiver.name}</h3>
+        </div>}
+        {achievements.realGuesser && <div style={{ border: 'solid 2px black', height: '180px', width: '100px', flexDirection: 'column', display: 'flex', alignItems: 'center' }}>
           <h3>Guesser</h3>
           <StarBorder />
-          <h3>Isidora</h3>
-        </div>
-      </div>
+          <h3>{achievements.realGuesser.name}</h3>
+        </div>}
+        {achievements.realDreamer && <div style={{ border: 'solid 2px black', height: '180px', width: '100px', flexDirection: 'column', display: 'flex', alignItems: 'center' }}>
+          <h3>Dreamer</h3>
+          <StarBorder />
+          <h3>{achievements.realDreamer.name}</h3>
+        </div>}
+        {achievements.realRealist && <div style={{ border: 'solid 2px black', height: '180px', width: '100px', flexDirection: 'column', display: 'flex', alignItems: 'center' }}>
+          <h3>Realist</h3>
+          <StarBorder />
+          <h3>{achievements.realRealist.name}</h3>
+        </div>}
+      </div>}
       <div style={{display:'flex', width:'90%',margin:'auto', marginTop:'16px'}}>
       <Button
           style={{ width: '48%', color: 'white', backgroundColor: '#06b306', height: '50px', margin:'auto', marginTop: '0px' }}

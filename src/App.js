@@ -16,6 +16,7 @@ import TableTop from './TableTop';
 import LandingPage from './LandingPage';
 import ResetRoundListener from './NetworkHandlers/ResetRoundListener';
 import WinnerListener from './NetworkHandlers/WinnerListener';
+import AchievementListener from './NetworkHandlers/AchievementListener';
 
 console.log(process.env.REACT_APP_API_URL);
 
@@ -46,6 +47,8 @@ function App() {
   const [scoresUpdate, setScoresUpdate] = useState([]);
   //WinnerListener
   const [winner,setWinner] = useState(null);
+  //AchievementsListener
+  const [achievements,setAchievements] = useState(null);
   //RoomListListener
   const [rooms, setRooms] = useState([]);
   const [currentRoom, setCurrentRoom] = useState('');
@@ -99,6 +102,7 @@ function App() {
       <PlayerOwnershipListener socket={socket} setOwnershipStatus={setOwnershipStatus} setEnableScore={setEnableScore}/>
       <ScoreUpdateListener socket={socket} setScoresUpdate={setScoresUpdate} updateSession={updateSession} />
       <WinnerListener socket={socket} setWinner={setWinner} updateSession={updateSession} />
+      <AchievementListener socket={socket} setAchievements={setAchievements} updateSession={updateSession} />
       <ResetRoundListener socket={socket} setEnableScore={setEnableScore} setCheckOwner={setCheckOwner}/>
       <RoomListListener socket={socket} setRooms={setRooms}/>
       <RoomNotFoundListener socket={socket} setFirstLog={setFirstLog} setSaveSession={setSaveSession} />
@@ -110,7 +114,7 @@ function App() {
         <TableTop socket={socket} player={player} storyTeller={storyTeller} voteStatus={voteStatus} 
           ownershipStatus={ownershipStatus} scoresUpdate={scoresUpdate} checkStoryTeller={checkStoryTeller} 
           checkOwner={checkOwner} displayedCards={displayedCards} enableScore={enableScore} 
-          showStartGame={showStartGame} currentRoom={currentRoom} winner={winner}
+          showStartGame={showStartGame} currentRoom={currentRoom} winner={winner} achievements={achievements}
           style={{height:'97.6vh', overflow:'hidden', margin:'0' }}
         />
       }
