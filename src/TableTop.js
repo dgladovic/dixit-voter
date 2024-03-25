@@ -4,6 +4,7 @@ import VoteStatusMonitor from './VoteStatusMonitor';
 import OwnerStatusMontior from './OwnerStatusMonitor';
 import Scoreboard from './Scoreboard';
 import StorytellerMessage from './StorytellerMessage';
+import Winner from './Winner';
 import DixitCard from './DixitCard';
 import { Grid, Button, Box, List, Listitem, Stack, ListItem } from '@mui/material';
 import PlayerBanner from './PlayerBanner';
@@ -14,7 +15,7 @@ import './TableTop.css';
 const TableTop = ({
     socket, player, storyTeller, voteStatus, ownershipStatus, scoresUpdate,
     checkStoryTeller, checkOwner, displayedCards, enableScore, showStartGame,
-    currentRoom
+    currentRoom, winner
 }) => {
 
     const handleCardSelect = (event) => {
@@ -79,7 +80,10 @@ const TableTop = ({
     return (
         <div className='origin'>
           <PlayerBanner player={player} className='banner'/>
-          <div className='origin-inner'>
+          {winner ? 
+            <Winner winner={winner}/>
+            :
+            <div className='origin-inner'>
             {/* <div>
               {messagesRes.map((message, index) => (
                 <div style={{ border: 'solid red 1px' }} key={index}>{message}</div>
@@ -183,6 +187,8 @@ const TableTop = ({
               </Box>
             )}
           </div>
+          }
+          
           {/* {!checkOwner && <VoteStatusMonitor voteStatus={voteStatus} />} */}
           {/* {checkOwner && <OwnerStatusMontior voteStatus={ownershipStatus} />} */}
           {/* <Footer class='origin-footer' scoresUpdate={scoresUpdate} player={player}/> */}
