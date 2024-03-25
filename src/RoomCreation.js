@@ -25,8 +25,13 @@ const RoomCreation = ({handleAddNewRoom}) => {
   };
 
   const handleConfirmClick = ()=>{
-    console.log('confirm');
-    handleAddNewRoom(newRoomNameForm);
+    console.log('confirm',value,roundNumber);
+    let roomData = {
+      name: newRoomNameForm,
+      mode: value,
+      round: roundNumber
+    }
+    handleAddNewRoom(roomData);
   }
 
   return (

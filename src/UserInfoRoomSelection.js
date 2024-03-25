@@ -78,12 +78,13 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer, animationPhase }) 
     }
   };
 
-  const handleAddNewRoom = (roomName) => {
-    if (roomName && roomName !== '') {
-      socket.emit('createRoom', roomName);
+  const handleAddNewRoom = (roomData) => {
+    console.log(roomData,'Test!')
+    if (roomData.name && roomData.name !== '') {
+      socket.emit('createRoom', roomData);
       const messageContent = {
         playerName: name,
-        roomName: roomName,
+        roomName: roomData.name,
         color: selectedColor,
       };
       const message = JSON.stringify(messageContent);
@@ -93,12 +94,12 @@ const UserInfoRoomSelection = ({ socket, rooms, handlePlayer, animationPhase }) 
     }
   };
 
-  const joinRoom = (room) => {
-    console.log(room, 'sobica');
-    if (room) {
+  const joinRoom = (roomData) => {
+    console.log(roomData, 'sobica');
+    if (roomData) {
       const messageContent = {
         playerName: name,
-        roomName: room,
+        roomName: roomData,
         color: selectedColor,
       };
       const message = JSON.stringify(messageContent);
